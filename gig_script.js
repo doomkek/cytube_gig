@@ -68,7 +68,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // If you need more explanations, go to https://github.com/zimny-lech/CyTube-Plus/wiki/FAQ
 
-debugger;
+
 
 UI_DefaultSynchtube = 1;	// default old Synchtube layout (player and playlist on the left)
 UI_Favicon = 1;			// [&] channel favicon
@@ -149,7 +149,7 @@ Favicon_URL = 'https://files.catbox.moe/7f4v2n.png';
 
 MiniLogo_URL = 'https://files.catbox.moe/0cd1on.png';
 
-ChannelName_Caption = 'Akasha Network';
+ChannelName_Caption = 'Akasha Network test';
 
 HeaderDropMenu_Title = 'Genshin';
 
@@ -1099,9 +1099,9 @@ function prepareMessage(msg) {
 }
 
 // insert code into chatline
-debugger;
+;
 function insertText(str) {
-	debugger;
+	;
 	$("#chatline").val($("#chatline").val()+str).focus();
 }
 
