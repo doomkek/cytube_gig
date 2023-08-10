@@ -3,11 +3,11 @@
 
 	/* -- body -- */
 
-	body {overflow-x:hidden}
+	body {overflow-x:hidden;}
 
 	/* -- buttons -- */
 
-.btn {text-shadow:none}
+.btn {text-shadow:none; border: 1px solid red;}
 
 	/* -- modal windows -- */
 
