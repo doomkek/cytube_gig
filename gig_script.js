@@ -186,15 +186,14 @@ ExternalScript_URL = '';
 	/* -- arrays -- */
 
 HeaderDropMenu_Array = [
+['Resources', ''],
+['Wallpapers', 'https://catbox.moe/c/gshtvu'],
+['Passion Game', 'https://honkaiimpact3.hoyoverse.com/global/en-us/fab'],
+['Emergency Onahole', 'https://files.catbox.moe/1zb32e.jpg'],
 ['Best Genshin', ''],
 ['Faruzan', 'https://store.steampowered.com/app/1761390/Hatsune_Miku_Project_DIVA_Mega_Mix/'],
 ['Yun Jin', 'https://www.youtube.com/watch?v=SZ8uV3BKSuU'],
 ['Mona', 'https://files.catbox.moe/q9tiwj.jpg'],
-['Resources', ''],
-['/gig/', 'https://www.nhs.uk/mental-health/conditions/schizophrenia/treatment/'],
-['Passion Game', 'https://hsr.hoyoverse.com/en-us/'],
-['Emergency Onahole', 'https://files.catbox.moe/1zb32e.jpg'],
-['36* Guide', 'https://streamable.com/216wpo'],
 ];
 
 MOTDAutoLogo_Array = [
