@@ -181,7 +181,7 @@ CustomPingSound_URL = 'https://dl.dropboxusercontent.com/s/0qtsttblgmkewnv/beep.
 
 PlayerHiding_URL = 'https://dl.dropboxusercontent.com/s/xz2o99scw5i7aai/stop.png';
 
-GroupEmotes_Number = 100;
+GroupEmotes_Number = 130;
 
 ExternalScript_URL = '';
 
