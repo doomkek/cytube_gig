@@ -229,7 +229,7 @@ Memes_Array = [
 
 UserMarks_Array = {
 'ZimnyLech':	'<img src="https://dl.dropboxusercontent.com/s/89gv8fvyr49vnev/kobato-icon-small.jpg" height="25">', 
-'calzoneman':	'â™ ',
+'calzoneman':	'♠',
 }
 
 SoundFilters_Array = {
@@ -250,8 +250,8 @@ CustomCaptions_Array = {
 }
 
 UnicodeChars_Array = [
-'â˜…', 'â˜†', 'â–²', 'â–¼', 'â™¥', 'â™ª', 'â™¿', 'âš’', 'â™•', 'âœ‰', 'â˜', 'â™ ', 'â†’', 
-'â˜‘', 'â˜’', 'âœ¡', 'â˜ª', 'âœ', 'â˜­', 'â˜¯', 'â’¶', 'â˜•', 'â™¨', 'Â¥', 'Â©', 'âˆž',
+'★', '☆', '▲', '▼', '♥', '♪', '♿', '⚒', '♕', '✉', '☏', '♠', '→', 
+'☑', '☒', '✡', '☪', '✝', '☭', '☯', 'Ⓐ', '☕', '♨', '¥', '©', '∞',
 ];
 
 ChannelGalleries_Array = [
@@ -269,7 +269,7 @@ MOTDTabs_CSS = {
 
 RulesBtn_HTML = '<ol><li>You want to write on the chat? Enter temporary nickname into <b>Guest Login</b> input and click enter.</li><li>You want to register a nick? Click <b>Account -> Profile</b> on the top of the channel, and fill the registration form. You don\'t need an email to register.</li><li>Do not spam.</li><li>You want to have this application on your own channel? Go to <a href="https://github.com/zimny-lech/CyTube-Plus">https://github.com/zimny-lech/CyTube-Plus</a>.</li></ol>';
 
-ChannelAnnouncement_HTML = 'IF PLAYBACK WINDOWS ARE WRONG SIZE: LAYOUT â†’ TURN "FLUID" OFF THEN ON. I SPENT TOO LONG TRYING TO FIX IT AND DISPLAYING THIS IS EASIER.';
+ChannelAnnouncement_HTML = 'IF PLAYBACK WINDOWS ARE WRONG SIZE: LAYOUT → TURN "FLUID" OFF THEN ON. I SPENT TOO LONG TRYING TO FIX IT AND DISPLAYING THIS IS EASIER.';
 
 EmbeddingMedia_Images = 'a[href$=".jpg"], a[href$=".jpg:large"], a[href$=".jpeg"], a[href$=".JPG"], a[href$=".png"], a[href$=".tiff"], a[href$=".gif"]';
 
@@ -407,7 +407,7 @@ ChannelDatabase=[
 ['http://www.youtube.com/watch?v=jd2-Nf86jvA', 'Weather Girls - Koi No Tenki Yohou'],
 ['', 'Anime songs'],
 ['http://www.youtube.com/watch?v=fJ_DH7jzoxQ', 'Ai No Tenshi (Perfect Blue)'],
-['http://www.youtube.com/watch?v=ZNu_NV5PEM8', 'Chuâ˜† - Miko Miko Naasu - Ai No Teema'],
+['http://www.youtube.com/watch?v=ZNu_NV5PEM8', 'Chu☆ - Miko Miko Naasu - Ai No Teema'],
 ['http://www.youtube.com/watch?v=l65_QPNZ_k8', 'Hommarju feat. MAKI - Yamato Nadeshiko Education (Seitokai Yakuindomo OP)'],
 ['http://www.youtube.com/watch?v=dQbaJquz_jo', 'Kayo Sakata - Shoujo Q (Pani Poni Dash! OP)'],
 ['http://www.youtube.com/watch?v=nLSFxQijz6U', 'Kotoko - Princess Bride'],
@@ -859,7 +859,7 @@ function changeMOTD() {
 		RulesBtn_HTML=="" ? RulesBtn_HTML='No rules.' : '';
 		rulesbtnwrap = $('<div id="rulesbtnwrap" />').appendTo("#motd");
 		rulesbtn = $('<button id="rules-btn" class="btn btn-default btn-sm" />')
-		  .text(RulesBtn_Caption+' â–¸')
+		  .text(RulesBtn_Caption+' ▸')
 		  .appendTo(rulesbtnwrap)
 		  .on("click", function() {
 			toggleDiv(rulespanel);
@@ -1329,7 +1329,7 @@ function formatOrderedList() {
 	for (i=1; i<len; i++) {
 		item=$("#queue .queue_entry:nth-child("+i+")").data("media");
 		link=formatURL(item);
-		list.push(item.title+' â– â–  '+link+' â– â–  ['+item.duration+']');
+		list.push(item.title+' ■■ '+link+' ■■ ['+item.duration+']');
 		list.sort();
 	}
 	return list.join('\n');
@@ -1641,7 +1641,7 @@ function showChatHelp() {
 	if (UI_ChatSpeak=="1") {
 		body.append('<strong>Voice commands</strong><br /><br />');
 		html='<li><code>!say</code> - text speaking in english (<i>!say Hello!</i>)</li>'
-		  + '<li><code>!mow</code> - text speaking in polish (<i>!mow ChrzÄ…szcz brzmi w trzcinie.</i>)';
+		  + '<li><code>!mow</code> - text speaking in polish (<i>!mow Chrząszcz brzmi w trzcinie.</i>)';
 		$('<ul />').html(html).appendTo(body);
 	}
 	arr = {
@@ -1736,7 +1736,7 @@ function showModPanel() {
 		} else if (name==CLIENT.name) {
 			html+='<i class="glyphicon glyphicon-comment"></i> '
 			  + '<i class="glyphicon glyphicon-user"></i> '
-			  + '(to: '+CLIENT.name+') â†’ '+mess
+			  + '(to: '+CLIENT.name+') → '+mess
 			  + '<br /><br />';
 		}
 	}
@@ -1763,9 +1763,9 @@ function showInfo() {
 		li1=$(".queue_active").next();
 		li2=li1.next();
 		li3=li2.next();
-		li1.length>0 ? arr.push(' 1â–¸ '+li1.children("a").html()) : '';
-		li2.length>0 ? arr.push(' // 2â–¸ '+li2.children("a").html()) : '';
-		li3.length>0 ? arr.push(' // 3â–¸ '+li3.children("a").html()) : '';
+		li1.length>0 ? arr.push(' 1▸ '+li1.children("a").html()) : '';
+		li2.length>0 ? arr.push(' // 2▸ '+li2.children("a").html()) : '';
+		li3.length>0 ? arr.push(' // 3▸ '+li3.children("a").html()) : '';
 		text+=arr.join("");
 		arr.length<3 ? text+=' // END OF PLAYLIST //' : '';
 		mediainfo.html('<marquee scrollamount="5">'+text+'</marquee>');
@@ -2381,7 +2381,7 @@ if (UI_Favicon=="1" && Favicon_URL!="") {
 
 // changing carets to unicode characters
 
-$("nav .caret, #cs-edit-dd-toggle .caret").removeClass('caret').html(' â–¾');
+$("nav .caret, #cs-edit-dd-toggle .caret").removeClass('caret').html(' ▾');
 
 // adding important messages to "Options"
 
@@ -2439,7 +2439,7 @@ if (UI_HeaderDropMenu=="1") {
 	headerdrop = $('<li id="headerdrop" class="dropdown" />')
 	  .insertAfter("#home-link");
 	$('<a class="dropdown-toggle" data-toggle="dropdown" href="#" />')
-	  .html(HeaderDropMenu_Title+' â–¾')
+	  .html(HeaderDropMenu_Title+' ▾')
 	  .appendTo(headerdrop);
 	headermenu = $('<ul id="headermenu" class="dropdown-menu" />')
 	  .appendTo(headerdrop);
@@ -2796,19 +2796,19 @@ if (UI_FontsBtn=="1") {
 	fontsbtnwrap = $('<div id="fontsbtnwrap" />').appendTo(fontspanel);
 
 	FontsArray = [
-		['background:white', 'white', 'â– '],
-		['background:gold', 'yellow', 'â– '],
-		['background:orange', 'orange', 'â– '],
-		['background:#FFBBFF', 'pink', 'â– '],
-		['background:red', 'red', 'â– '],
-		['background:limegreen', 'lime', 'â– '],
-		['background:green', 'green', 'â– '],
-		['background:aqua', 'aqua', 'â– '],
-		['background:blue', 'blue', 'â– '],
-		['background:#660099', 'violet', 'â– '],
-		['background:#660000', 'brown', 'â– '],
-		['background:silver', 'silver', 'â– '],
-		['background:black', 'black', 'â– '],
+		['background:white', 'white', '■'],
+		['background:gold', 'yellow', '■'],
+		['background:orange', 'orange', '■'],
+		['background:#FFBBFF', 'pink', '■'],
+		['background:red', 'red', '■'],
+		['background:limegreen', 'lime', '■'],
+		['background:green', 'green', '■'],
+		['background:aqua', 'aqua', '■'],
+		['background:blue', 'blue', '■'],
+		['background:#660099', 'violet', '■'],
+		['background:#660000', 'brown', '■'],
+		['background:silver', 'silver', '■'],
+		['background:black', 'black', '■'],
 		['background:black; color:white', 'bw', 'a'],
 		['background:white; font-weight:bold; color:black', 'b', 'B'],
 		['background:white; font-style:italic; color:black', 'i', 'I'],
@@ -3071,9 +3071,9 @@ if (UI_EmbeddingMedia=="1" && (EmbeddingMedia_Images!="" || EmbeddingMedia_Video
 		  + 'Click on image or double click on video to open in the new tab.\n'
 		  + 'All videos are muted by default, if autoplay - click to unmute, else click to play.\n\n'
 		  + 'This channel supports following types of links (specified as CSS codes):\n'
-		  + 'â–  Images - ';
+		  + '■ Images - ';
 		  (EmbeddingMedia_Images!="") ? txt+=EmbeddingMedia_Images : 'none';
-		txt += '\nâ–  Videos - ';
+		txt += '\n■ Videos - ';
 		  (EmbeddingMedia_Videos!="") ? txt+=EmbeddingMedia_Videos : 'none';
 		alert(txt);
 	});
@@ -3307,8 +3307,8 @@ if ($("#plonotification").length>0) {
 
 // rearranging footer
 
-html='<br />CyTube Plus 4.5 Â· Copyright &copy; 2013-2014 Zimny Lech Â· '
-  + 'Free source on <a href="http://github.com/zimny-lech/CyTube-Plus" target="_blank">GitHub</a> Â· '
+html='<br />CyTube Plus 4.5 · Copyright &copy; 2013-2014 Zimny Lech · '
+  + 'Free source on <a href="http://github.com/zimny-lech/CyTube-Plus" target="_blank">GitHub</a> · '
   + '<a href="http://github.com/zimny-lech/CyTube-Plus/wiki" target="_blank">Wiki</a>';
 $(".credit").append(html);
 
@@ -3531,7 +3531,7 @@ $("#chatline").on("keydown", function(ev) {
 			meta={};
 			if (COMMAND) {
 				socket.emit("chatMsg", {msg:_msg});
-				msg='âž¥ '+msg;
+				msg='➥ '+msg;
 				COMMAND=false;
 			}
 			if (USEROPTS.adminhat && CLIENT.rank>=255) {
@@ -3581,7 +3581,7 @@ $("#chatbtn").on("click", function() {
 		msg=prepareMessage(msg.trim());
 		if (COMMAND) {
 			socket.emit("chatMsg", {msg:_msg});
-			msg='âž¥ '+msg;
+			msg='➥ '+msg;
 			COMMAND=false;
 		}
 		socket.emit("chatMsg", {msg:msg});
