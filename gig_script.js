@@ -3672,6 +3672,4 @@ if (UI_ExternalScript=="1" && ExternalScript_URL!="") {
 }
 
 /* ----- END OF LIBRARY ----- */
-fakefluid(){
-	$("#fontspanel, #emotespanel").addClass('fluidpanel');
-}
+
