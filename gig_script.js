@@ -122,7 +122,7 @@ UI_MediaControls = 1;		// embedded video preloaded controls
 				// [ REQUIRE: UI_EmbeddingMedia enabled ]
 UI_QuickCommandsBtns = 1;	// buttons with '/clear' and '/afk' functions
 UI_VolumeBtns = 1;		// additional volume buttons for YouTube player
-UI_EmptyCornerBackground = 1;	// [&] random background image for empty playlist row corner
+UI_EmptyCornerBackground = 0;	// [&] random background image for empty playlist row corner
 UI_ExtendedGetURLs = 1;		// extended 'Get URLs' function
 UI_DefaultNonTemp = 1;		// default unchecking "Add as temporary" checkbox after loading for registered users
 UI_CustomFooter = 0;		// [&] custom channel footer
