@@ -190,12 +190,11 @@ ExternalScript_URL = '';
 HeaderDropMenu_Array = [
 ['Resources', ''],
 ['Wallpapers', 'https://catbox.moe/c/gshtvu'],
-['Passion Game', 'https://honkaiimpact3.hoyoverse.com/global/en-us/fab'],
-['Emergency Onahole', 'https://files.catbox.moe/1zb32e.jpg'],
-['Best Genshin', ''],
-['Faruzan', 'https://store.steampowered.com/app/1761390/Hatsune_Miku_Project_DIVA_Mega_Mix/'],
-['Yun Jin', 'https://www.youtube.com/watch?v=SZ8uV3BKSuU'],
-['Mona', 'https://files.catbox.moe/q9tiwj.jpg'],
+['OC Archive', 'https://catbox.moe/c/n3mdgw'],
+['Source', 'https://github.com/doomkek/cytube_gig'],
+['Past Events', ''],
+['King of TCG I', 'https://cytu.be/r/gig'],
+['King of TCG II', 'https://cytu.be/r/gig'],
 ];
 
 MOTDAutoLogo_Array = [
