@@ -2131,6 +2131,7 @@ function toggleFluidLayout() {
 	FLUID=!FLUID;
 	setOpt(CHANNEL.name+"_fluid", FLUID);
 	scrollChat();
+	resizeStuff();
 }
 
 // toggle minimized layout
@@ -3633,7 +3634,6 @@ function resizeStuff() {
 
 $(window).unbind("resize");
 $(window).resize(resizeStuff);
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // setting global sockets
@@ -3656,6 +3656,8 @@ if (FLUID) {
 	$("#fluid-layout").prop('checked', 'true');
 	$("#fontspanel, #emotespanel").addClass('fluidpanel');
 }
+
+resizeStuff();
 
 // finishing variable
 
