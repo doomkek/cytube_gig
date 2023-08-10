@@ -68,6 +68,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // If you need more explanations, go to https://github.com/zimny-lech/CyTube-Plus/wiki/FAQ
 
+debugger;
+
 UI_DefaultSynchtube = 1;	// default old Synchtube layout (player and playlist on the left)
 UI_Favicon = 1;			// [&] channel favicon
 UI_MiniLogo = 1;		// [&] small channel logo/avatar in the top navbar
@@ -1097,8 +1099,9 @@ function prepareMessage(msg) {
 }
 
 // insert code into chatline
-
+debugger;
 function insertText(str) {
+	debugger;
 	$("#chatline").val($("#chatline").val()+str).focus();
 }
 
