@@ -214,7 +214,7 @@ RandomQuotes_Array = [
 ];
 
 AskAnswers_Array = [
-'Lady Ningguang said this: Roll for who you like.', 'Lady Ningguang said this: Roll for who is meta.', 'Lady Ningguang said this: Fuck rolling for who you like!', 'Lady Ningguang said this: Roll for Hu you like.', 'Lady Ningguang said this: Roll for who isn't meta.',
+'Lady Ningguang said this: Roll for who you like.', 'Lady Ningguang said this: Roll for who is meta.', 'Lady Ningguang said this: Fuck rolling for who you like!', 'Lady Ningguang said this: Roll for Hu you like.', 'Lady Ningguang said this: Roll for who isn\'t meta.',
 'Lady Ningguang said this: Roll for everyone.', 'Lady Ningguang said this: Don\'t roll for anyone.', 'Lady Ningguang said this: Roll for who you dislike.', 'Lady Ningguang said this: Roll for who /gig/ likes.'
 ];
 
