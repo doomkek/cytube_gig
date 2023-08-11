@@ -209,17 +209,13 @@ MOTDTabs_Array = [
 ];
 
 RandomQuotes_Array = [
-	'I like the Pope dancing', 'No quotes today', 'O rly?',
-	'People have the right to be stupid. You abuse that privilege', 'Don\'t play stupid with me',
-	'Roses are red violets are blue, God made me pretty, what happened to you?',
-	'Please don\'t interrupt me while I\'m ignoring you',
-	'Are you always this stupid, or are you making a special effort today?',
-	'I like you. You remind me of when I was young and stupid.', 'Go and buy me a beer',
-	'The door of this channel is always open for you... so feel free to leave!',
+	'aroundtheworld', 'allmebtw',
+	'Please don\'t interrupt me while I\'m ignoring you'
 ];
 
 AskAnswers_Array = [
-'Lady Ningguang said this: Roll for who you like.', 'Lady Ningguang said this: Roll for who is meta.',
+'Lady Ningguang said this: Roll for who you like.', 'Lady Ningguang said this: Roll for who is meta.', 'Lady Ningguang said this: Fuck rolling for who you like!', 'Lady Ningguang said this: Roll for Hu you like.', 'Lady Ningguang said this: Roll for who isn't meta.',
+'Lady Ningguang said this: Roll for everyone.', 'Lady Ningguang said this: Don\'t roll for anyone.', 'Lady Ningguang said this: Roll for who you dislike.', 'Lady Ningguang said this: Roll for who /gig/ likes.'
 ];
 
 Memes_Array = [
@@ -1012,7 +1008,7 @@ function prepareMessage(msg) {
 			rnd < 10 ? rnd = "0" + rnd : '';
 			msg = '' + rnd;
 
-		} else if (msg.indexOf("!q") == 0) {
+		} else if (msg.indexOf("!cheld") == 0) {
 
 			RandomQuotes_Array.length < 1 ? RandomQuotes_Array = ['error: no quotes available'] : '';
 			rnd = Math.round(Math.random() * (RandomQuotes_Array.length - 1));
