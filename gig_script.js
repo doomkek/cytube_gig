@@ -1550,7 +1550,7 @@ function showEmotes() {
 		html = '';
 
 		for (i = 0; i < len; i++) {
-			html += `<img src="${CHANNEL.emotes[i].image}" onclick="insertText('${CHANNEL.emotes[i].name}')" title="${CHANNEL.emotes[i].name}" />`;
+			html += `<img src="${CHANNEL.emotes[i].image}" onclick="insertText('${CHANNEL.emotes[i].name} ')" title="${CHANNEL.emotes[i].name}" />`;
 			if (i % GroupEmotes_Number == stop) {
 				arr.push(html);
 				html = '';
