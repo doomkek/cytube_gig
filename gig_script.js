@@ -986,7 +986,7 @@ function prepareMessage(msg) {
 			rnd = Math.round(Math.random() * (arr.length - 1));
 			msg = arr[rnd];
 
-		} else if (msg.indexOf("!ask ")==0) {
+		} else if (msg.indexOf("!ganyu ")==0) {
 
 			AskAnswers_Array.length < 1 ? AskAnswers_Array = ['yes', 'no'] : '';
 			rnd = a = Math.round(Math.random() * (AskAnswers_Array.length - 1));
