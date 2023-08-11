@@ -209,13 +209,13 @@ MOTDTabs_Array = [
 ];
 
 RandomQuotes_Array = [
-	'aroundtheworld', 'allmebtw',
-	'Please don\'t interrupt me while I\'m ignoring you'
+	'aroundtheworld', 'allmebtw', 'cheldsombrero', 'cheldeheheh', 'chongli', 'cheldreal', 'cheldcry', 'cheldeh'
 ];
 
 AskAnswers_Array = [
 'Lady Ningguang said this: Roll for who you like.', 'Lady Ningguang said this: Roll for who is meta.', 'Lady Ningguang said this: Fuck rolling for who you like!', 'Lady Ningguang said this: Roll for Hu you like.', 'Lady Ningguang said this: Roll for who isn\'t meta.',
-'Lady Ningguang said this: Roll for everyone.', 'Lady Ningguang said this: Don\'t roll for anyone.', 'Lady Ningguang said this: Roll for who you dislike.', 'Lady Ningguang said this: Roll for who /gig/ likes.'
+'Lady Ningguang said this: Roll for everyone.', 'Lady Ningguang said this: Don\'t roll for anyone.', 'Lady Ningguang said this: Roll for who you dislike.', 'Lady Ningguang said this: Roll for who /gig/ likes.', 'Lady Ningguang said this: Roll for males.', 'Lady Ningguang said this: Roll for lolis.', 'Lady Ningguang said this: Roll futureproof C2R1 Raiden.', 'Lady Ningguang said this: Roll for coom.',
+'Lady Ningguang said this: Roll for account power', 'Lady Ningguang said this: Roll for hags.', 'Lady Ningguang said this: Roll for hebes.', 'Lady Ningguang said this: This is a Chinese children's gacha you faggots.', Lady Ningguang said this: Roll for the Anemo Archon', 'Lady Ningguang said this: Roll for abyss.'
 ];
 
 Memes_Array = [
@@ -3670,6 +3670,7 @@ setTimeout(() => {
   rngWallpaperBtn .on('click', function() { console.log("walls"); });         
   rngWallpaperBtn.insertAfter($("#playlistrow #layout-btn"));
 }, 500);
-
+$("#emotelistbtn").insertAfter$("#playlistrow #layout-btn"));
+const button = document.getElementById("emotelistbtn").innerText = "Search Emotes";
 /* ----- END OF LIBRARY ----- */
 
