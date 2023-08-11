@@ -1544,7 +1544,7 @@ function showEmotes() {
 		makeAlert("No emotes available", "Ask channel administrator.").appendTo(emotespanel);
 	} else if (UI_GroupEmotes!="1" || len<=GroupEmotes_Number) {
 		for (i in CHANNEL.emotes) {
-			$('<img onclick="insertText(\''+CHANNEL.emotes[i].name+' \')" />')
+			$('<img onclick="insertText(\''+CHANNEL.emotes[i].name+' \') alt="'+CHANNEL.emotes[i].name+'" />')
 		 	 .attr({'src':CHANNEL.emotes[i].image, 'title':CHANNEL.emotes[i].name})
 		  	.appendTo(emotespanel);
 		}
