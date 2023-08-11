@@ -107,8 +107,8 @@ UI_UnicodeChars = 1;		// [&] additional buttons in the fonts panel with unicode 
 // [ REQUIRE: UI_FontsBtn enabled ]
 UI_EmotesBtn = 1;		// button displaying box with clickable chat emotes
 UI_GroupEmotes = 1;		// [&] emotes panel pagination, display limited number of emotes at one time
-// [ REQUIRE: UI_EmotesBtn enabled ]
-UI_CommandsBtn = 1;		// button displaying modal window with chat commands help
+				// [ REQUIRE: UI_EmotesBtn enabled ]
+UI_CommandsBtn = 0;		// button displaying modal window with chat commands help
 UI_ModPanel = 0;		// [&] panel with messages and help for moderators
 UI_CustomCaptions = 0;		// [&] custom captions for add, refresh, voteskip buttons, and welcome text
 UI_PlayerOptions = 1;		// [&] additional player options
@@ -219,7 +219,7 @@ RandomQuotes_Array = [
 ];
 
 AskAnswers_Array = [
-	'Lady Ningguang said this: Roll for who you like.', 'Lady Ningguang said this: Roll for who is meta.',
+'Lady Ningguang said this: Roll for who you like.', 'Lady Ningguang said this: Roll for who is meta.',
 ];
 
 Memes_Array = [
@@ -986,7 +986,7 @@ function prepareMessage(msg) {
 			rnd = Math.round(Math.random() * (arr.length - 1));
 			msg = arr[rnd];
 
-		} else if (msg.indexOf("!ask ") == 0) {
+		} else if (msg.indexOf("!ask ")==0) {
 
 			AskAnswers_Array.length < 1 ? AskAnswers_Array = ['yes', 'no'] : '';
 			rnd = a = Math.round(Math.random() * (AskAnswers_Array.length - 1));
