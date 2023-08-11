@@ -219,8 +219,7 @@ RandomQuotes_Array = [
 ];
 
 AskAnswers_Array = [
-'100% for sure', 'definitely yes', 'yes', 'probably', 'not any chance', 'definitely no', 
-'a little chance', 'no', '50/50', 'fairy is tired and will not answer', 'I refuse to answer',
+'Lady Ningguang said this: Roll for who you like.', 'Lady Ningguang said this: Roll for who is meta.',
 ];
 
 Memes_Array = [
