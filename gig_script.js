@@ -1,4 +1,4 @@
-/*
+f/*
 The MIT License (MIT)
 
 Copyright (c) 2013-2014 Zimny Lech
@@ -213,9 +213,9 @@ RandomQuotes_Array = [
 ];
 
 AskAnswers_Array = [
-'Lady Ningguang said this: Roll for who you like.', 'Lady Ningguang said this: Roll for who is meta.', 'Lady Ningguang said this: Fuck rolling for who you like!', 'Lady Ningguang said this: Roll for Hu you like.', 'Lady Ningguang said this: Roll for who isn\'t meta.',
+'ladyningguang Roll for who you like.', 'ladyningguang Roll for who is meta.', 'ladyningguang Fuck rolling for who you like!', 'ladyningguang Roll for Hu you like.', 'ladyningguang Roll for who isn\'t meta.',
 'Lady Ningguang said this: Roll for everyone.', 'Lady Ningguang said this: Don\'t roll for anyone.', 'Lady Ningguang said this: Roll for who you dislike.', 'Lady Ningguang said this: Roll for who /gig/ likes.', 'Lady Ningguang said this: Roll for males.', 'Lady Ningguang said this: Roll for lolis.', 'Lady Ningguang said this: Roll for futureproof C2R1 Raiden.', 'Lady Ningguang said this: Roll for coom.',
-'Lady Ningguang said this: Roll for account power', 'Lady Ningguang said this: Roll for hags.', 'Lady Ningguang said this: Roll for hebes.', 'Lady Ningguang said this: This is a Chinese children\'s gacha you faggots.', 'Lady Ningguang said this: Roll for the Anemo Archon', 'Lady Ningguang said this: Roll for abyss.'
+'Lady Ningguang said this: Roll for account power', 'Lady Ningguang said this: Roll for hags.', 'Lady Ningguang said this: Roll for hebes.', 'Lady Ningguang said this: This is a Chinese children\'s gacha you faggots.', 'Lady Ningguang said this: Roll for the Anemo Archon.', 'Lady Ningguang said this: Roll for abyss.'
 ];
 
 Memes_Array = [
