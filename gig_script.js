@@ -3665,5 +3665,11 @@ if (UI_ExternalScript == "1" && ExternalScript_URL != "") {
 	$.getScript(ExternalScript_URL);
 }
 
+setTimeout(() => {
+  var rngWallpaperBtn = $('<button class="btn btn-sm btn-default">Change Wallpaper</button>'); 
+  rngWallpaperBtn .on('click', function() { console.log("walls"); });         
+  rngWallpaperBtn.insertAfter($("#playlistrow #layout-btn"));
+}, 500);
+
 /* ----- END OF LIBRARY ----- */
 
