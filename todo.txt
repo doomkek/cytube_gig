@@ -1,1 +1,2 @@
-[] Fix "New Background" button not visible for guests
+[X] Fix "New Background" button not visible for guests
+[] Add /gig command that would return link to the latest /gig/ thread
