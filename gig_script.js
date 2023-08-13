@@ -3478,82 +3478,6 @@ addChatMessage = function (data) {
 	_chatBuffer(data);
 }
 
-// fix formatting and sending chat messages
-// DEV NOTE: this are extended events from CyTube "util.js" file
-
-$("#chatline, #chatbtn").unbind();
-
-$("#chatline").on("keydown", function (ev) {
-	if (ev.keyCode == 13) {
-		if (CHATTHROTTLE) {
-			return;
-		}
-		_msg = $("#chatline").val();
-		msg = $("#chatline").val();
-		if (msg.trim()) {
-			msg = prepareMessage(msg.trim());
-			meta = {};
-			if (COMMAND) {
-				socket.emit("chatMsg", { msg: _msg });
-				msg = '➥ ' + msg;
-				COMMAND = false;
-			}
-			if (USEROPTS.adminhat && CLIENT.rank >= 255) {
-				msg = '/a ' + msg;
-			} else if (USEROPTS.modhat && CLIENT.rank >= Rank.Moderator) {
-				meta.modflair = CLIENT.rank;
-			}
-			if (CLIENT.rank >= 2 && msg.indexOf("/m ") === 0) {
-				meta.modflair = CLIENT.rank;
-				msg = msg.substring(3);
-			}
-			socket.emit("chatMsg", { msg: msg, meta: meta });
-			userChatStats(_msg);
-			CHATHIST.push($("#chatline").val());
-			CHATHISTIDX = CHATHIST.length;
-			$("#chatline").val('');
-		}
-		return;
-	} else if (ev.keyCode == 9) {
-		chatTabComplete();
-		ev.preventDefault();
-		return false;
-	} else if (ev.keyCode == 38) {
-		if (CHATHISTIDX == CHATHIST.length) {
-			CHATHIST.push($("#chatline").val());
-		}
-		if (CHATHISTIDX > 0) {
-			CHATHISTIDX--;
-			$("#chatline").val(CHATHIST[CHATHISTIDX]);
-		}
-		ev.preventDefault();
-		return false;
-	} else if (ev.keyCode == 40) {
-		if (CHATHISTIDX < CHATHIST.length - 1) {
-			CHATHISTIDX++;
-			$("#chatline").val(CHATHIST[CHATHISTIDX]);
-		}
-		ev.preventDefault();
-		return false;
-	}
-});
-
-$("#chatbtn").on("click", function () {
-	_msg = $("#chatline").val();
-	msg = $("#chatline").val();
-	if (msg.trim()) {
-		msg = prepareMessage(msg.trim());
-		if (COMMAND) {
-			socket.emit("chatMsg", { msg: _msg });
-			msg = '➥ ' + msg;
-			COMMAND = false;
-		}
-		socket.emit("chatMsg", { msg: msg });
-		userChatStats(_msg);
-		$("#chatline").val('');
-	}
-});
-
 // add emote select option, when user types in chat ':' and first 3 letters of the emote this slect
 // list will pop-up with found emotes
 (function () {
@@ -3688,6 +3612,83 @@ $("#chatbtn").on("click", function () {
 		}
 	}
 })();
+
+// fix formatting and sending chat messages
+// DEV NOTE: this are extended events from CyTube "util.js" file
+
+$("#chatline, #chatbtn").unbind();
+
+$("#chatline").on("keydown", function (ev) {
+	if (ev.keyCode == 13) {
+		if (CHATTHROTTLE) {
+			return;
+		}
+		_msg = $("#chatline").val();
+		msg = $("#chatline").val();
+		if (msg.trim()) {
+			msg = prepareMessage(msg.trim());
+			meta = {};
+			if (COMMAND) {
+				socket.emit("chatMsg", { msg: _msg });
+				msg = '➥ ' + msg;
+				COMMAND = false;
+			}
+			if (USEROPTS.adminhat && CLIENT.rank >= 255) {
+				msg = '/a ' + msg;
+			} else if (USEROPTS.modhat && CLIENT.rank >= Rank.Moderator) {
+				meta.modflair = CLIENT.rank;
+			}
+			if (CLIENT.rank >= 2 && msg.indexOf("/m ") === 0) {
+				meta.modflair = CLIENT.rank;
+				msg = msg.substring(3);
+			}
+			socket.emit("chatMsg", { msg: msg, meta: meta });
+			userChatStats(_msg);
+			CHATHIST.push($("#chatline").val());
+			CHATHISTIDX = CHATHIST.length;
+			$("#chatline").val('');
+		}
+		return;
+	} else if (ev.keyCode == 9) {
+		chatTabComplete();
+		ev.preventDefault();
+		return false;
+	} else if (ev.keyCode == 38) {
+		if (CHATHISTIDX == CHATHIST.length) {
+			CHATHIST.push($("#chatline").val());
+		}
+		if (CHATHISTIDX > 0) {
+			CHATHISTIDX--;
+			$("#chatline").val(CHATHIST[CHATHISTIDX]);
+		}
+		ev.preventDefault();
+		return false;
+	} else if (ev.keyCode == 40) {
+		if (CHATHISTIDX < CHATHIST.length - 1) {
+			CHATHISTIDX++;
+			$("#chatline").val(CHATHIST[CHATHISTIDX]);
+		}
+		ev.preventDefault();
+		return false;
+	}
+});
+
+$("#chatbtn").on("click", function () {
+	_msg = $("#chatline").val();
+	msg = $("#chatline").val();
+	if (msg.trim()) {
+		msg = prepareMessage(msg.trim());
+		if (COMMAND) {
+			socket.emit("chatMsg", { msg: _msg });
+			msg = '➥ ' + msg;
+			COMMAND = false;
+		}
+		socket.emit("chatMsg", { msg: msg });
+		userChatStats(_msg);
+		$("#chatline").val('');
+	}
+});
+
 
 // fix layout behaviour after resizing
 // DEV NOTE: this is extended function from CyTube "util.js" file
