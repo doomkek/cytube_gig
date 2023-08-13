@@ -3512,7 +3512,6 @@ $("#chatline, #chatbtn").unbind();
 		// }                     
 		else if (e.keyCode == 13 || e.keyCode == 9) { //enter or tab
 			if (selList.length) {
-				e.preventDefault();
 				e.stopPropagation();
 				chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
 				closeList();
@@ -3575,7 +3574,7 @@ $("#chatline, #chatbtn").unbind();
 					$('.list-option').first().toggleClass('selected');
 
 					selList.on('change', function (e) {
-						selectedEmote = CHANNEL.emotes.find(emote => emote.name == $('.list-option.selected').text());						
+						selectedEmote = CHANNEL.emotes.find(emote => emote.name == $('.list-option.selected').text());
 					});
 
 					selList.trigger('change');
@@ -3621,6 +3620,9 @@ $("#chatline, #chatbtn").unbind();
 
 
 $("#chatline").on("keydown", function (ev) {
+	if (ev.isPropagationStopped()) {
+		return;
+	}
 	if (ev.keyCode == 13) {
 		if (CHATTHROTTLE) {
 			return;
