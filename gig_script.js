@@ -3565,7 +3565,7 @@ $("#chatline, #chatbtn").unbind();
 
 					$('.list-option').first().toggleClass('selected');
 
-					selList.on('change', function (e) {
+					selList.on('change', function () {
 						selectedEmote = CHANNEL.emotes.find(emote => emote.name == $('.list-option.selected').text());
 					});
 
@@ -3577,7 +3577,7 @@ $("#chatline, #chatbtn").unbind();
 					selectingEmote = true;
 				}
 				else {
-					selList.remove();
+					closeList();
 				}
 			}
 		}
@@ -3587,16 +3587,19 @@ $("#chatline, #chatbtn").unbind();
 	});
 
 	$('#chatline').on('blur', function (e) {
+		console.log(selectingEmote);
 		if (!selectingEmote) {
 			closeList();
 		}
 	});
 
 	$('#chatline').on('focus', function () {
+		console.log(selectingEmote);
 		$('#chatline').trigger('input');
 	});
 
 	function closeList() {
+		console.log(selectingEmote);
 		selectingEmote = false;
 		selList.remove();
 	}
