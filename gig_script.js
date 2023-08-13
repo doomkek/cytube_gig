@@ -3560,7 +3560,7 @@ $("#chatline, #chatbtn").unbind();
 						opt.on('dblclick', function (e) {
 							selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(e.target).text());
 							if (e.ctrlKey) {
-								chat.val(`${chat.val()} + ${selectedEmote.name} `);
+								chat.val(`${chat.val()} ${selectedEmote.name} `);
 							}
 							else {
 								chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
