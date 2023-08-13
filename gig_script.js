@@ -79,7 +79,7 @@ UI_RemoveLayoutMenu = 1;	// removing 'Layout' menu from the header
 UI_MOTDAutoLogo = 0;		// [&] big channel logo inserted into MOTD
 UI_MOTDTabs = 0;		// [&] switchable MOTD tabs application for homepage-like channel header
 UI_MOTDDelete = 0;		// deleting previous MOTD after accepting/loading script
-UI_RulesBtn = 0;		// [&] button displaying channel rules
+UI_RulesBtn = 1;		// [&] button displaying channel rules
 UI_AttentionBar = 0;		// [&] imageboard-style attention bar (requires external application)
 UI_ChannelAnnouncement = 0;	// [&] additional custom channel announcement
 UI_FullTitleBar = 0;		// full-width video title bar
@@ -157,7 +157,7 @@ MOTDAutoLogo_Mode = 1;
 
 MOTDAutoLogo_Interval = 20;
 
-RulesBtn_Caption = 'Fuck Jeanies';
+RulesBtn_Caption = 'Features';
 
 AttentionBar_URL = '';
 
@@ -848,8 +848,8 @@ function changeMOTD() {
 	if (UI_RulesBtn == "1") {
 		// adding rules button
 
-		RulesBtn_Caption == "" ? RulesBtn_Caption = 'Read Channel Rules' : '';
-		RulesBtn_HTML == "" ? RulesBtn_HTML = 'No rules.' : '';
+		RulesBtn_Caption == "" ? RulesBtn_Caption = 'Test Rules' : '';
+		RulesBtn_HTML == "" ? RulesBtn_HTML = 'Test Rules2.' : '';
 		rulesbtnwrap = $('<div id="rulesbtnwrap" />').appendTo("#motd");
 		rulesbtn = $('<button id="rules-btn" class="btn btn-default btn-sm" />')
 			.text(RulesBtn_Caption + ' ▸')
