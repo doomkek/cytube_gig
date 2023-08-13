@@ -3584,7 +3584,7 @@ $("#chatline, #chatbtn").unbind();
 	});
 
 	$('#chatline').on('blur', function (e) {
-		if (e.target != selList || !selectingEmote)
+		if (!selectingEmote)
 			closeList();
 	});
 
