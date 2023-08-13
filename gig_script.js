@@ -3478,6 +3478,11 @@ addChatMessage = function (data) {
 	_chatBuffer(data);
 }
 
+// fix formatting and sending chat messages
+// DEV NOTE: this are extended events from CyTube "util.js" file
+
+$("#chatline, #chatbtn").unbind();
+
 // add emote select option, when user types in chat ':' and first 3 letters of the emote this slect
 // list will pop-up with found emotes
 (function () {
@@ -3613,10 +3618,6 @@ addChatMessage = function (data) {
 	}
 })();
 
-// fix formatting and sending chat messages
-// DEV NOTE: this are extended events from CyTube "util.js" file
-
-$("#chatline, #chatbtn").unbind();
 
 $("#chatline").on("keydown", function (ev) {
 	if (ev.keyCode == 13) {
