@@ -62,7 +62,7 @@ body {
 #emoteListSelect {
 	max-height: 150px;
 	overflow: auto;
-	max-width: 150px;
+	min-width: 220px;
 	margin: 0;
 
 }

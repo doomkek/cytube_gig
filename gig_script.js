@@ -3495,40 +3495,35 @@ $("#chatline, #chatbtn").unbind();
 
 	$('#chatline').on('keydown', function (e) {
 		if (e.keyCode == 38 || e.keyCode == 40) { //up | down
-			e.preventDefault();
-			let selected = selList.find('.selected');
-			let target = e.keyCode == 38 ? selected.prev('div') : selected.next('div');
+			if (selectingEmote) {
+				e.stopPropagation();
+				e.preventDefault();
 
-			if (target.length) {
-				selected.toggleClass('selected');
-				target.toggleClass('selected');
-				selList.trigger('change');
-				ensureScroll(selList, target);
+				let selected = selList.find('.selected');
+				let target = e.keyCode == 38 ? selected.prev('div') : selected.next('div');
+
+				if (target.length) {
+					selected.toggleClass('selected');
+					target.toggleClass('selected');
+					selList.trigger('change');
+					ensureScroll(selList, target);
+				}
 			}
 		}
-
-		// if (e.keyCode == 13) { //enter, select topmost emote and insert it
-		//     chat.val(chat.val().replace(`:${emoteName}`, $('#emoteListSelect option:first').val()) + " ");
-		//     closeList();
-		// }                     
 		else if (e.keyCode == 13 || e.keyCode == 9) { //enter or tab
 			if (selectingEmote) {
 				e.stopPropagation();
+				e.preventDefault();
+
 				chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
-				closeList();
+
+				if (!e.ctrlKey)
+					closeList();
 			}
 		}
-		// else if (e.keyCode == 38) { // up, when hit first element and keep pressing up we get back to chat
-		//     if ($('#emoteListSelect option:first').prop('selected') == true)
-		//         chat.focus();
-		// }
 		else if (e.keyCode == 27) { //escape
 			closeList();
 		}
-		// else if (e.keyCode == 8) { //backspace, need to remove since i plan to not focus on list at all
-		//     chat.focus();
-		//     chat.val(chat.val().substring(0, chat.val().length));
-		// }
 	});
 
 	$('#chatline').on('input', function (e) {
@@ -3566,8 +3561,11 @@ $("#chatline, #chatbtn").unbind();
 						opt.on('dblclick', function (e) {
 							selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(e.target).text());
 							chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
-							closeList();
+							
+							if (!e.ctrlKey)
+								closeList();
 						});
+
 
 						selList.append(opt);
 					});
