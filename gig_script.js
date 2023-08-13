@@ -3636,6 +3636,10 @@ $('#chatline').on('input', function (e) {
 						$('#emoteListSelect option:first').prop('selected', true);
 						selList.trigger('change');
 					}
+
+					if (e.keyCode == 27) { //escape, chat can be in focus but user wish to close list, need to close it without focusing on list
+						closeList();
+					}
 				});
 			}
 			else {
