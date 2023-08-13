@@ -3600,8 +3600,12 @@ $("#chatline, #chatbtn").unbind();
 
 	function insertEmote(isCtrlKeyPressed) {
 		let msg = chat.val();
-		msg = msg.substring(0, msg.lastIndexOf(`:${emoteName}`)) + " " + selectedEmote.name;
-		chat.val(msg);
+		msg = msg.substring(0, msg.lastIndexOf(`:${emoteName}`));
+
+		if (msg[msg.length - 1] != " ")
+			msg += " ";
+
+		chat.val(msg + selectedEmote.name);
 
 		if (!isCtrlKeyPressed) {
 			closeList();
