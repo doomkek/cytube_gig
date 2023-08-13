@@ -3606,7 +3606,7 @@ $("#chatline, #chatbtn").unbind();
 		if (msg[msg.length - 1] != " ")
 			msg += " ";
 
-		chat.val(msg + selectedEmote.name);
+		chat.val(msg + selectedEmote.name + " ");
 
 		if (!isCtrlKeyPressed) {
 			closeList();
