@@ -3591,7 +3591,7 @@ $("#chatline, #chatbtn").unbind();
 
 	function insertEmote(isCtrlKeyPressed) {
 		if (isCtrlKeyPressed){
-			chat.val().replace(`:${emoteName}`, "");
+			chat.val(chat.val().replace(`:${emoteName}`, ""));
 			chat.val(`${chat.val()} ${selectedEmote.name} `);
 		} 
 		else {
