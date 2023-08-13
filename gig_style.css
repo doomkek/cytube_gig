@@ -51,12 +51,11 @@ body {
 	padding-right: 5px;
 }
 
-.list-option:hover {
-	background-color: red;
-}
-
+.list-option:hover,
 .list-option.selected {
-	background-color: gray;
+	background-color: #ffbebe;
+	text-shadow: 1px 1px #808080 !important;
+	color: #ffedb6;
 }
 
 #emoteListSelect {

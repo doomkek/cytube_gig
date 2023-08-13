@@ -3551,7 +3551,6 @@ $("#chatline, #chatbtn").unbind();
 					selList.css("left", chat.position().left);
 					selList.css("top", chat.position().top + parseInt(chat.css("height")));
 					selList.css("background-color", "#161a20");
-					//selList.css("background-color", "#FFF");
 					selList.css("border", "1px solid black");
 					selList.css("z-index", "999");
 
@@ -3560,12 +3559,14 @@ $("#chatline, #chatbtn").unbind();
 
 						opt.on('dblclick', function (e) {
 							selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(e.target).text());
-							chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
-							
-							if (!e.ctrlKey)
+							if (e.ctrlKey) {
+								chat.val(`${chat.val()} + ${selectedEmote.name} `);
+							}
+							else {
+								chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
 								closeList();
+							}
 						});
-
 
 						selList.append(opt);
 					});
@@ -3577,10 +3578,6 @@ $("#chatline, #chatbtn").unbind();
 					});
 
 					selList.trigger('change');
-					// selList.on('keydown', function (e) {
-					//     console.log(e.keyCode);
-					//     chat.trigger('keydown', e.keyCode);
-					// });
 
 					selectingEmote = true;
 				}
