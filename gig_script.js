@@ -3558,6 +3558,7 @@ $("#chatline, #chatbtn").unbind();
 							selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(e.target).text());
 
 							insertEmote(e.ctrlKey);
+							chat.focus();							
 						});
 
 						selList.append(opt);
