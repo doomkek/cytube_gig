@@ -3569,6 +3569,9 @@ $("#chatline, #chatbtn").unbind();
 						selectedEmote = CHANNEL.emotes.find(emote => emote.name == $('.list-option.selected').text());
 					});
 
+					selList.on('mouseover', function () { selectingEmote = true; })
+					selList.on('mouseleave', function () { selectingEmote = false; });
+
 					selList.trigger('change');
 
 					selectingEmote = true;
@@ -3584,7 +3587,9 @@ $("#chatline, #chatbtn").unbind();
 	});
 
 	$('#chatline').on('blur', function (e) {
-		closeList();
+		if (!selectingEmote) {
+			closeList();
+		}
 	});
 
 	$('#chatline').on('focus', function () {
