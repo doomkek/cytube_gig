@@ -107,7 +107,7 @@ UI_UnicodeChars = 1;		// [&] additional buttons in the fonts panel with unicode 
 // [ REQUIRE: UI_FontsBtn enabled ]
 UI_EmotesBtn = 1;		// button displaying box with clickable chat emotes
 UI_GroupEmotes = 1;		// [&] emotes panel pagination, display limited number of emotes at one time
-				// [ REQUIRE: UI_EmotesBtn enabled ]
+// [ REQUIRE: UI_EmotesBtn enabled ]
 UI_CommandsBtn = 0;		// button displaying modal window with chat commands help
 UI_ModPanel = 0;		// [&] panel with messages and help for moderators
 UI_CustomCaptions = 0;		// [&] custom captions for add, refresh, voteskip buttons, and welcome text
@@ -213,9 +213,9 @@ RandomQuotes_Array = [
 ];
 
 AskAnswers_Array = [
-'ladyningguang Roll for who you like.', 'ladyningguang Roll for who is meta.', 'ladyningguang Fuck rolling for who you like!', 'ladyningguang Roll for Hu you like.', 'ladyningguang Roll for who isn\'t meta.',
-'Lady Ningguang said this: Roll for everyone.', 'Lady Ningguang said this: Don\'t roll for anyone.', 'Lady Ningguang said this: Roll for who you dislike.', 'Lady Ningguang said this: Roll for who /gig/ likes.', 'Lady Ningguang said this: Roll for males.', 'Lady Ningguang said this: Roll for lolis.', 'Lady Ningguang said this: Roll for futureproof C2R1 Raiden.', 'Lady Ningguang said this: Roll for coom.',
-'Lady Ningguang said this: Roll for account power', 'Lady Ningguang said this: Roll for hags.', 'Lady Ningguang said this: Roll for hebes.', 'Lady Ningguang said this: This is a Chinese children\'s gacha you faggots.', 'Lady Ningguang said this: Roll for the Anemo Archon.', 'Lady Ningguang said this: Roll for abyss.'
+	'ladyningguang Roll for who you like.', 'ladyningguang Roll for who is meta.', 'ladyningguang Fuck rolling for who you like!', 'ladyningguang Roll for Hu you like.', 'ladyningguang Roll for who isn\'t meta.',
+	'Lady Ningguang said this: Roll for everyone.', 'Lady Ningguang said this: Don\'t roll for anyone.', 'Lady Ningguang said this: Roll for who you dislike.', 'Lady Ningguang said this: Roll for who /gig/ likes.', 'Lady Ningguang said this: Roll for males.', 'Lady Ningguang said this: Roll for lolis.', 'Lady Ningguang said this: Roll for futureproof C2R1 Raiden.', 'Lady Ningguang said this: Roll for coom.',
+	'Lady Ningguang said this: Roll for account power', 'Lady Ningguang said this: Roll for hags.', 'Lady Ningguang said this: Roll for hebes.', 'Lady Ningguang said this: This is a Chinese children\'s gacha you faggots.', 'Lady Ningguang said this: Roll for the Anemo Archon.', 'Lady Ningguang said this: Roll for abyss.'
 ];
 
 Memes_Array = [
@@ -980,7 +980,7 @@ function prepareMessage(msg) {
 			rnd = Math.round(Math.random() * (arr.length - 1));
 			msg = arr[rnd];
 
-		} else if (msg.indexOf("!ganyu ")==0) {
+		} else if (msg.indexOf("!ganyu ") == 0) {
 
 			AskAnswers_Array.length < 1 ? AskAnswers_Array = ['yes', 'no'] : '';
 			rnd = a = Math.round(Math.random() * (AskAnswers_Array.length - 1));
@@ -3587,6 +3587,7 @@ $('#chatline').on('input', function (e) {
 				selList.css("position", "absolute");
 				selList.css("left", chat.position().left);
 				selList.css("top", chat.position().top + parseInt(chat.css("height")));
+				selList.css("background-color", "#161a20");
 				selList.css("z-index", "999");
 
 				foundEmotes.forEach(emote => {
@@ -3602,12 +3603,11 @@ $('#chatline').on('input', function (e) {
 				});
 
 
-				selList.on('change', function (event) {
+				selList.on('change', function (e) {
 					selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(this).val());
 				});
 
 				selList.on('keydown', function (e) {
-					console.log(e.keyCode);
 					if (e.keyCode == 27) { //escape
 						selList.remove();
 						chat.focus();
@@ -3618,19 +3618,14 @@ $('#chatline').on('input', function (e) {
 						selList.remove();
 						chat.focus();
 					}
-
 				});
 
 				chat.on('keydown', function (e) {
-					switch (e.which) {
-						case 38:
-							console.log('Up arrow key pressed');
-							break;
-						case 40:
-							selList.focus();
-							$('#emoteListSelect option:first').prop('selected', true);
-							selList.trigger('change');
-							break;
+					if (e.keyCode == 40) { //down
+						selList.focus();
+						$('#emoteListSelect option:first').prop('selected', true);
+						selList.trigger('change');
+						e
 					}
 				});
 			}
@@ -3726,8 +3721,8 @@ if (UI_ExternalScript == "1" && ExternalScript_URL != "") {
 }
 
 //setTimeout(() => {
-//  var rngWallpaperBtn = $('<button class="btn btn-sm btn-default">Change Wallpaper</button>'); 
-//  rngWallpaperBtn .on('click', function() { console.log("walls"); });         
+//  var rngWallpaperBtn = $('<button class="btn btn-sm btn-default">Change Wallpaper</button>');
+//  rngWallpaperBtn .on('click', function() { console.log("walls"); });
 //  rngWallpaperBtn.insertAfter($("#playlistrow #layout-btn"));
 //}, 500);
 //$("#emotelistbtn").insertAfter$("#playlistrow #layout-btn"));
