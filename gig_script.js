@@ -3491,6 +3491,7 @@ $("#chatline, #chatbtn").unbind();
 	let selList = $('#emoteListSelect');
 	let selectedEmote = {};
 	let emoteName = '';
+	let selectingEmote = false;
 
 	$('#chatline').on('keydown', function (e) {
 		if (e.keyCode == 38 || e.keyCode == 40) { //up | down
@@ -3511,7 +3512,7 @@ $("#chatline, #chatbtn").unbind();
 		//     closeList();
 		// }                     
 		else if (e.keyCode == 13 || e.keyCode == 9) { //enter or tab
-			if (selList.length) {
+			if (selectingEmote) {
 				e.stopPropagation();
 				chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
 				closeList();
@@ -3578,11 +3579,12 @@ $("#chatline, #chatbtn").unbind();
 					});
 
 					selList.trigger('change');
-
 					// selList.on('keydown', function (e) {
 					//     console.log(e.keyCode);
 					//     chat.trigger('keydown', e.keyCode);
 					// });
+
+					selectingEmote = true;
 				}
 				else {
 					selList.remove();
@@ -3597,6 +3599,7 @@ $("#chatline, #chatbtn").unbind();
 	function closeList() {
 		selList.remove();
 		chat.focus();
+		selectingEmote = false;
 	}
 
 	function ensureScroll(parent, target) {
