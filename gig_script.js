@@ -3556,107 +3556,138 @@ $("#chatbtn").on("click", function () {
 
 // add emote select option, when user types in chat ':' and first 3 letters of the emote this slect
 // list will pop-up with found emotes
-$('#chatline').on('input', function (e) {
-	let val = e.target.value;
+(function () {
 	let chat = $('#chatline');
 	let parent = chat.parent();
 	let selList = $('#emoteListSelect');
 	let selectedEmote = {};
+	let emoteName = '';
 
-	if (val.includes(':')) {
-		let emoteName = val.substring(val.indexOf(':') + 1);
+	$('#chatline').on('keydown', function (e) {
+		if (e.keyCode == 38 || e.keyCode == 40) { //up | down
+			e.preventDefault();
+			let selected = selList.find('.selected');
+			let target = e.keyCode == 38 ? selected.prev('div') : selected.next('div');
 
-		if (emoteName.length > 2) {
-			let foundEmotes = [];
-
-			CHANNEL.emotes.forEach(emote => {
-				if (emote.name.toLowerCase().includes(emoteName.toLowerCase())) {
-					foundEmotes.push(emote);
-				}
-			});
-
-			console.log(foundEmotes);
-
-			if (foundEmotes.length > 0) {
-				if (selList.length > 0) {
-					selList.remove();
-				}
-
-				parent.append(`<select id="emoteListSelect" multiple></select>`);
-				selList = $('#emoteListSelect');
-				selList.css("position", "absolute");
-				selList.css("left", chat.position().left);
-				selList.css("top", chat.position().top + parseInt(chat.css("height")));
-				selList.css("background-color", "#161a20");
-				selList.css("z-index", "999");
-
-				foundEmotes.forEach(emote => {
-					let opt = $(`<option>`, {
-						value: emote.name,
-						text: emote.name
-					});
-
-					opt.css("display", "flex");
-					opt.css("align-items", "center");
-					opt.prepend(`<img src=${emote.image} heigt="35px" width="35px">`);
-					selList.append(opt);
-				});
-
-
-				selList.on('change', function (e) {
-					selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(this).val());
-				});
-
-				selList.on('keydown', function (e) {
-					if (e.keyCode == 38) { // up, when hit first element and keep pressing up we get back to chat
-						if ($('#emoteListSelect option:first').prop('selected') == true)
-							chat.focus();
-					}
-
-					if (e.keyCode == 27) { //escape
-						closeList();
-					}
-
-					if (e.keyCode == 13) { //enter
-						chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
-						closeList();
-					}
-				});
-
-				selList.on('dblclick', function () {
-					selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(this).val());
-					chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
-					closeList();
-				});
-
-				chat.on('keydown', function (e) {                        
-					if (e.keyCode == 40) { //down
-						e.preventDefault();
-						selList.focus();
-						$('#emoteListSelect option:first').prop('selected', true);
-						selList.trigger('change');
-					}
-
-					if (e.keyCode == 27) { //escape, chat can be in focus but user wish to close list, need to close it without focusing on list
-						closeList();
-					}
-				});
-			}
-			else {
-				$('#emoteListSelect').remove();
+			if (target.length) {
+				selected.toggleClass('selected');
+				target.toggleClass('selected');
+				selList.trigger('change');
+				ensureScroll(selList, target);
 			}
 		}
-	}
-	else {
-		selList.remove();
-		chat.focus();
-	}
+
+
+		// if (e.keyCode == 13) { //enter, select topmost emote and insert it
+		//     chat.val(chat.val().replace(`:${emoteName}`, $('#emoteListSelect option:first').val()) + " ");
+		//     closeList();
+		// }                     
+		if (e.keyCode == 13 || e.keyCode == 9) { //enter or tab
+			chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
+			closeList();
+		}
+		// else if (e.keyCode == 38) { // up, when hit first element and keep pressing up we get back to chat
+		//     if ($('#emoteListSelect option:first').prop('selected') == true)
+		//         chat.focus();
+		// }
+		else if (e.keyCode == 27) { //escape
+			closeList();
+		}
+		// else if (e.keyCode == 8) { //backspace, need to remove since i plan to not focus on list at all
+		//     chat.focus();
+		//     chat.val(chat.val().substring(0, chat.val().length));
+		// }
+	});
+
+	$('#chatline').on('input', function (e) {
+		let val = e.target.value;
+		if (val.includes(':')) {
+			emoteName = val.substring(val.lastIndexOf(':') + 1);
+
+			if (emoteName.length >= 2) {
+				let foundEmotes = [];
+
+				CHANNEL.emotes.forEach(emote => {
+					if (emote.name.toLowerCase().includes(emoteName.toLowerCase())) {
+						foundEmotes.push(emote);
+					}
+				});
+
+				if (foundEmotes.length > 0) {
+					if (selList.length > 0) {
+						selList.remove();
+					}
+
+					parent.append(`<div id="emoteListSelect"></div>`);
+					selList = $('#emoteListSelect');
+					selList.css("position", "absolute");
+					selList.css("left", chat.position().left);
+					selList.css("top", chat.position().top + parseInt(chat.css("height")));
+					//selList.css("background-color", "#161a20");
+					selList.css("background-color", "#FFF");
+					selList.css("border", "1px solid black");
+					selList.css("z-index", "999");
+
+					foundEmotes.forEach(emote => {
+						let opt = $(`<div class="list-option"><img src=${emote.image} heigt="35px" width="35px">${emote.name}</div>`);
+						selList.append(opt);
+					});
+
+					$('.list-option').first().toggleClass('selected');
+
+					selList.on('change', function (e) {
+						selectedEmote = CHANNEL.emotes.find(emote => emote.name == $('.list-option.selected').text());
+						console.log(selectedEmote);
+					});
+
+					selList.trigger('change');
+
+					// selList.on('keydown', function (e) {
+					//     console.log(e.keyCode);
+					//     chat.trigger('keydown', e.keyCode);
+					// });
+
+					// selList.on('dblclick', function () {
+					//     selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(this).val());
+					//     chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
+					//     closeList();
+					// });
+
+
+				}
+				else {
+					selList.remove();
+				}
+			}
+		}
+		else {
+			closeList();
+		}
+	});
 
 	function closeList() {
 		selList.remove();
 		chat.focus();
 	}
-});
+
+	function ensureScroll(parent, target) {
+		let tH = target.outerHeight(true);
+
+		let pt = parent.offset().top;
+		let pb = pt + parent.height();
+
+		let tt = target.offset().top;
+		let tb = tt + tH;
+
+		if (tb > pb) { // scrolling bottom 
+			parent.scrollTop(parent.scrollTop() + tH);
+		}
+
+		if (tt < pt) { // scrolling top
+			parent.scrollTop(parent.scrollTop() - pt + tt - tH);
+		}
+	}
+})();
 
 // fix layout behaviour after resizing
 // DEV NOTE: this is extended function from CyTube "util.js" file
