@@ -3556,7 +3556,7 @@ $("#chatline, #chatbtn").unbind();
 
 						opt.on('dblclick', function (e) {
 							selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(e.target).text());
-							
+
 							insertEmote(e.ctrlKey);
 						});
 
@@ -3583,11 +3583,12 @@ $("#chatline, #chatbtn").unbind();
 		}
 	});
 
-	$('#chatline').on('blur', function() {
-		closeList();
+	$('#chatline').on('blur', function (e) {
+		if (e.target != selList)
+			closeList();
 	});
 
-	$('#chatline').on('focus', function() {
+	$('#chatline').on('focus', function () {
 		$('#chatline').trigger('input');
 	});
 
@@ -3598,10 +3599,10 @@ $("#chatline, #chatbtn").unbind();
 	}
 
 	function insertEmote(isCtrlKeyPressed) {
-		if (isCtrlKeyPressed){
+		if (isCtrlKeyPressed) {
 			chat.val(chat.val().replace(`:${emoteName}`, ""));
 			chat.val(`${chat.val()} ${selectedEmote.name} `);
-		} 
+		}
 		else {
 			chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
 			closeList();
