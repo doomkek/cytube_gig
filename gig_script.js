@@ -479,7 +479,6 @@ var ALTERCHATFORMAT = false;	// using altered 'formatChatMessage' built-in funct
 var PREVTIME = 0;		// previous read of a current item time for the progress bar
 var LASTADD = 0;		// timestamp of the last adding random item from the channel database
 var USERONLINE = 0;		// user minutes online
-var BGCHANGE = 0;		// number of background changes for the easter egg function
 
 var MUTEDVOICES = new Array();		// list of users with muted chat sounds by user
 var CHATSTAT = { "n": 0, "l": 0, "m": [] };	// array with user messages statistics
@@ -490,7 +489,6 @@ var HASH = '';			// simple hash for comparing if the new messages have appeared 
 WEBKIT = "webkitRequestAnimationFrame" in window;
 SOUNDSVALUES = new Array(0, 0.1, 0.2, 0.4, 0.7, 1);
 SPEAKLINK = 'http://webanywhere.cs.washington.edu/cgi-bin/espeak/getsound.pl';
-IMBA = new Audio("https://dl.dropboxusercontent.com/s/xdnpynq643ziq9o/inba.ogg");
 CHATSOUND.volume = 0.6;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1063,27 +1061,6 @@ function prepareMessage(msg) {
 		} else if (msg.indexOf("!now") == 0) {
 
 			msg = 'Now playing: ' + $(".queue_active a").html();
-
-		} else if (msg.indexOf("!CO ZJE TEH?") == 0) {
-
-			msg = 'TEH ZJE HUJ';
-
-		} else if (msg.indexOf("!inba") == 0) {
-
-			IMBA.volume = 0.6;
-			IMBA.play();
-			mutePlayer();
-			inbix = setInterval(function () {
-				inba();
-			}, 200);
-			setTimeout(function () {
-				unmutePlayer();
-				BGCHANGE = 0;
-				clearInterval(inbix);
-				$("body").css({ 'background-image': '', 'background-color': '' });
-				setUserCSS();
-			}, 12000);
-			msg = 'JP2GMD';
 
 		} else {
 			COMMAND = false;
@@ -2556,14 +2533,6 @@ if (UI_FullTitleBar == "1") {
 if (UI_TitleBarDescription == "1") {
 	socket.on("changeMedia", changeTitle);
 	changeTitle();
-}
-
-// easter egg
-
-function inba() {
-	$("body").css('background-image', 'none');
-	BGCHANGE++;
-	BGCHANGE % 2 == 0 ? $("body").css('background-color', 'gold') : $("body").css('background-color', 'blue');
 }
 
 // customizing chat notifications sound
