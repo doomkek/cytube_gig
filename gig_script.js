@@ -3554,6 +3554,97 @@ $("#chatbtn").on("click", function () {
 	}
 });
 
+// add emote select option, when user types in chat ':' and first 3 letters of the emote this slect
+// list will pop-up with found emotes
+$('#chatline').on('input', function (e) {
+	let val = e.target.value;
+	let chat = $('#chatline');
+	let parent = chat.parent();
+	let selList = $('#emoteListSelect');
+	let selectedEmote = {};
+
+	if (val.includes(':')) {
+		let emoteName = val.substring(val.indexOf(':') + 1);
+
+		if (emoteName.length > 2) {
+			let foundEmotes = [];
+
+			CHANNEL.emotes.forEach(emote => {
+				if (emote.name.toLowerCase().includes(emoteName.toLowerCase())) {
+					foundEmotes.push(emote);
+				}
+			});
+
+			console.log(foundEmotes);
+
+			if (foundEmotes.length > 0) {
+				if (selList.length > 0) {
+					selList.remove();
+				}
+
+				parent.append(`<select id="emoteListSelect" multiple></select>`);
+				selList = $('#emoteListSelect');
+				selList.css("position", "absolute");
+				selList.css("left", chat.position().left);
+				selList.css("top", chat.position().top + parseInt(chat.css("height")));
+				selList.css("z-index", "999");
+
+				foundEmotes.forEach(emote => {
+					let opt = $(`<option>`, {
+						value: emote.name,
+						text: emote.name
+					});
+
+					opt.css("display", "flex");
+					opt.css("align-items", "center");
+					opt.prepend(`<img src=${emote.image} heigt="35px" width="35px">`);
+					selList.append(opt);
+				});
+
+
+				selList.on('change', function (event) {
+					selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(this).val());
+				});
+
+				selList.on('keydown', function (e) {
+					console.log(e.keyCode);
+					if (e.keyCode == 27) { //escape
+						selList.remove();
+						chat.focus();
+					}
+
+					if (e.keyCode == 13) { //enter
+						chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
+						selList.remove();
+						chat.focus();
+					}
+
+				});
+
+				chat.on('keydown', function (e) {
+					switch (e.which) {
+						case 38:
+							console.log('Up arrow key pressed');
+							break;
+						case 40:
+							selList.focus();
+							$('#emoteListSelect option:first').prop('selected', true);
+							selList.trigger('change');
+							break;
+					}
+				});
+			}
+			else {
+				$('#emoteListSelect').remove();
+			}
+		}
+	}
+	else {
+		selList.remove();
+		chat.focus();
+	}
+});
+
 // fix layout behaviour after resizing
 // DEV NOTE: this is extended function from CyTube "util.js" file
 
