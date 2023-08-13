@@ -3570,7 +3570,7 @@ $("#chatline, #chatbtn").unbind();
 					});
 
 					selList.trigger('change');
-
+					
 					selectingEmote = true;
 				}
 				else {
@@ -3596,7 +3596,6 @@ $("#chatline, #chatbtn").unbind();
 	function closeList() {
 		selectingEmote = false;
 		selList.remove();
-		chat.focus();
 	}
 
 	function insertEmote(isCtrlKeyPressed) {
