@@ -3625,7 +3625,6 @@ $('#chatline').on('input', function (e) {
 						selList.focus();
 						$('#emoteListSelect option:first').prop('selected', true);
 						selList.trigger('change');
-						e
 					}
 				});
 			}
