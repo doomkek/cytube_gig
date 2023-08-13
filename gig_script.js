@@ -3633,14 +3633,20 @@ $("#chatbtn").on("click", function () {
 
 					foundEmotes.forEach(emote => {
 						let opt = $(`<div class="list-option"><img src=${emote.image} heigt="35px" width="35px">${emote.name}</div>`);
+
+						opt.on('dblclick', function (e) {
+							selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(e.target).text());
+							chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
+							closeList();
+						});
+
 						selList.append(opt);
 					});
 
 					$('.list-option').first().toggleClass('selected');
 
 					selList.on('change', function (e) {
-						selectedEmote = CHANNEL.emotes.find(emote => emote.name == $('.list-option.selected').text());
-						console.log(selectedEmote);
+						selectedEmote = CHANNEL.emotes.find(emote => emote.name == $('.list-option.selected').text());						
 					});
 
 					selList.trigger('change');
@@ -3649,14 +3655,6 @@ $("#chatbtn").on("click", function () {
 					//     console.log(e.keyCode);
 					//     chat.trigger('keydown', e.keyCode);
 					// });
-
-					// selList.on('dblclick', function () {
-					//     selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(this).val());
-					//     chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
-					//     closeList();
-					// });
-
-
 				}
 				else {
 					selList.remove();
