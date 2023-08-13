@@ -3586,6 +3586,7 @@ $("#chatline, #chatbtn").unbind();
 		}
 	});
 
+	$('#chatline').on('mouseleave', function () { selectingEmote = false; });
 	$('#chatline').on('blur', function (e) {
 		console.log(selectingEmote);
 		if (!selectingEmote) {
