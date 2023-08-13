@@ -3609,15 +3609,19 @@ $('#chatline').on('input', function (e) {
 
 				selList.on('keydown', function (e) {
 					if (e.keyCode == 27) { //escape
-						selList.remove();
-						chat.focus();
+						closeList();
 					}
 
 					if (e.keyCode == 13) { //enter
 						chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
-						selList.remove();
-						chat.focus();
+						closeList();
 					}
+				});
+
+				selList.on('dblclick', function () {
+					selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(this).val());
+					chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
+					closeList();
 				});
 
 				chat.on('keydown', function (e) {
@@ -3634,6 +3638,11 @@ $('#chatline').on('input', function (e) {
 		}
 	}
 	else {
+		selList.remove();
+		chat.focus();
+	}
+
+	function closeList() {
 		selList.remove();
 		chat.focus();
 	}
