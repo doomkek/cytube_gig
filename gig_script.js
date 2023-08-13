@@ -3570,7 +3570,7 @@ $("#chatline, #chatbtn").unbind();
 					});
 
 					selList.trigger('change');
-					
+
 					selectingEmote = true;
 				}
 				else {
@@ -3602,7 +3602,7 @@ $("#chatline, #chatbtn").unbind();
 		let msg = chat.val();
 		let index = msg.lastIndexOf(`:${emoteName}`);
 
-		if (index > 0)
+		if (index >= 0)
 			msg = msg.substring(0, msg.lastIndexOf(`:${emoteName}`));
 
 		if (msg.length > 0 && index > 0 && msg[msg.length - 1] != " ")
