@@ -3577,7 +3577,6 @@ $("#chatbtn").on("click", function () {
 			}
 		}
 
-
 		// if (e.keyCode == 13) { //enter, select topmost emote and insert it
 		//     chat.val(chat.val().replace(`:${emoteName}`, $('#emoteListSelect option:first').val()) + " ");
 		//     closeList();
@@ -3600,7 +3599,7 @@ $("#chatbtn").on("click", function () {
 		//     chat.focus();
 		//     chat.val(chat.val().substring(0, chat.val().length));
 		// }
-	});
+	}, { priority: 'first' });
 
 	$('#chatline').on('input', function (e) {
 		let val = e.target.value;
@@ -3664,7 +3663,7 @@ $("#chatbtn").on("click", function () {
 		else {
 			closeList();
 		}
-	});
+	}, { priority: 'first' });
 
 	function closeList() {
 		selList.remove();
