@@ -3584,13 +3584,11 @@ $("#chatline, #chatbtn").unbind();
 	});
 
 	$('#chatline').on('blur', function (e) {
-		if (!selectingEmote)
-			closeList();
+		closeList();
 	});
 
 	$('#chatline').on('focus', function () {
-		if (selectingEmote)
-			$('#chatline').trigger('input');
+		$('#chatline').trigger('input');
 	});
 
 	function closeList() {
