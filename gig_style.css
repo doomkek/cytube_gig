@@ -40,6 +40,33 @@ body {
 	margin-top: -5px
 }
 
+/* -- emote suggestion list -- */
+.list-option {
+	align-items: center;
+	display: flex;
+	user-select: none;
+}
+
+.list-option img {
+	padding-right: 5px;
+}
+
+.list-option:hover {
+	background-color: red;
+}
+
+.list-option.selected {
+	background-color: gray;
+}
+
+#emoteListSelect {
+	max-height: 150px;
+	overflow: auto;
+	max-width: 150px;
+	margin: 0;
+
+}
+
 /* -- superadmin icon -- */
 
 .glyphicon-globe {
