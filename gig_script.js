@@ -3584,7 +3584,7 @@ $("#chatline, #chatbtn").unbind();
 	});
 
 	$('#chatline').on('blur', function (e) {
-		if (e.target != selList)
+		if (e.target != selList || !selectingEmote)
 			closeList();
 	});
 
@@ -3593,9 +3593,9 @@ $("#chatline, #chatbtn").unbind();
 	});
 
 	function closeList() {
+		selectingEmote = false;
 		selList.remove();
 		chat.focus();
-		selectingEmote = false;
 	}
 
 	function insertEmote(isCtrlKeyPressed) {
