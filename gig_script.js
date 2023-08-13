@@ -3583,8 +3583,11 @@ $("#chatbtn").on("click", function () {
 		//     closeList();
 		// }                     
 		if (e.keyCode == 13 || e.keyCode == 9) { //enter or tab
-			chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
-			closeList();
+			if (selList != undefined) {
+				e.preventDefault();
+				chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
+				closeList();
+			}
 		}
 		// else if (e.keyCode == 38) { // up, when hit first element and keep pressing up we get back to chat
 		//     if ($('#emoteListSelect option:first').prop('selected') == true)
