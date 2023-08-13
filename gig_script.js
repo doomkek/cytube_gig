@@ -3589,7 +3589,8 @@ $("#chatline, #chatbtn").unbind();
 	});
 
 	$('#chatline').on('focus', function () {
-		$('#chatline').trigger('input');
+		if (selectingEmote)
+			$('#chatline').trigger('input');
 	});
 
 	function closeList() {
