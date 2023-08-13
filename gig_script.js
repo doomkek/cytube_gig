@@ -3513,6 +3513,7 @@ $("#chatline, #chatbtn").unbind();
 		else if (e.keyCode == 13 || e.keyCode == 9) { //enter or tab
 			if (selList.length) {
 				e.preventDefault();
+				e.stopPropagation();
 				chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
 				closeList();
 			}
