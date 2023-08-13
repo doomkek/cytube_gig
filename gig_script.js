@@ -3583,6 +3583,14 @@ $("#chatline, #chatbtn").unbind();
 		}
 	});
 
+	$('#chatline').on('blur', function() {
+		closeList();
+	});
+
+	$('#chatline').on('focus', function() {
+		$('#chatline').trigger('input');
+	});
+
 	function closeList() {
 		selList.remove();
 		chat.focus();
