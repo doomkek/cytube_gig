@@ -3510,8 +3510,8 @@ $("#chatline, #chatbtn").unbind();
 		//     chat.val(chat.val().replace(`:${emoteName}`, $('#emoteListSelect option:first').val()) + " ");
 		//     closeList();
 		// }                     
-		if (e.keyCode == 13 || e.keyCode == 9) { //enter or tab
-			if (selList != undefined) {
+		else if (e.keyCode == 13 || e.keyCode == 9) { //enter or tab
+			if (selList.length) {
 				e.preventDefault();
 				chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
 				closeList();
@@ -3554,8 +3554,8 @@ $("#chatline, #chatbtn").unbind();
 					selList.css("position", "absolute");
 					selList.css("left", chat.position().left);
 					selList.css("top", chat.position().top + parseInt(chat.css("height")));
-					//selList.css("background-color", "#161a20");
-					selList.css("background-color", "#FFF");
+					selList.css("background-color", "#161a20");
+					//selList.css("background-color", "#FFF");
 					selList.css("border", "1px solid black");
 					selList.css("z-index", "999");
 
