@@ -3599,12 +3599,11 @@ $("#chatline, #chatbtn").unbind();
 	}
 
 	function insertEmote(isCtrlKeyPressed) {
-		if (isCtrlKeyPressed) {
-			chat.val(chat.val().replace(`:${emoteName}`, ""));
-			chat.val(`${chat.val()} ${selectedEmote.name} `);
-		}
-		else {
-			chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
+		let msg = chat.val();
+		msg = msg.substring(0, msg.lastIndexOf(`:${emoteName}`)) + " " + selectedEmote.name;
+		chat.val(msg);
+
+		if (!isCtrlKeyPressed) {
 			closeList();
 		}
 	}
