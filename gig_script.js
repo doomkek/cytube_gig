@@ -3515,10 +3515,7 @@ $("#chatline, #chatbtn").unbind();
 				e.stopPropagation();
 				e.preventDefault();
 
-				chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
-
-				if (!e.ctrlKey)
-					closeList();
+				insertEmote(e.ctrlKey);
 			}
 		}
 		else if (e.keyCode == 27) { //escape
@@ -3559,13 +3556,8 @@ $("#chatline, #chatbtn").unbind();
 
 						opt.on('dblclick', function (e) {
 							selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(e.target).text());
-							if (e.ctrlKey) {
-								chat.val(`${chat.val()} ${selectedEmote.name} `);
-							}
-							else {
-								chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
-								closeList();
-							}
+							
+							insertEmote(e.ctrlKey);
 						});
 
 						selList.append(opt);
@@ -3595,6 +3587,17 @@ $("#chatline, #chatbtn").unbind();
 		selList.remove();
 		chat.focus();
 		selectingEmote = false;
+	}
+
+	function insertEmote(isCtrlKeyPressed) {
+		if (isCtrlKeyPressed){
+			chat.val().replace(`:${emoteName}`, "");
+			chat.val(`${chat.val()} ${selectedEmote.name} `);
+		} 
+		else {
+			chat.val(chat.val().replace(`:${emoteName}`, selectedEmote.name) + " ");
+			closeList();
+		}
 	}
 
 	function ensureScroll(parent, target) {
