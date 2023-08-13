@@ -3554,7 +3554,7 @@ $("#chatline, #chatbtn").unbind();
 					foundEmotes.forEach(emote => {
 						let opt = $(`<div class="list-option"><img src=${emote.image} heigt="35px" width="35px">${emote.name}</div>`);
 
-						opt.on('dblclick', function (e) {
+						opt.on('click', function (e) {
 							selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(e.target).text());
 
 							insertEmote(e.ctrlKey);
