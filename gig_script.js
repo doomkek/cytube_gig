@@ -3608,6 +3608,11 @@ $('#chatline').on('input', function (e) {
 				});
 
 				selList.on('keydown', function (e) {
+					if (e.keyCode == 38) { // up, when hit first element and keep pressing up we get back to chat
+						if ($('#emoteListSelect option:first').prop('selected') == true)
+							chat.focus();
+					}
+
 					if (e.keyCode == 27) { //escape
 						closeList();
 					}
@@ -3624,8 +3629,9 @@ $('#chatline').on('input', function (e) {
 					closeList();
 				});
 
-				chat.on('keydown', function (e) {
+				chat.on('keydown', function (e) {                        
 					if (e.keyCode == 40) { //down
+						e.preventDefault();
 						selList.focus();
 						$('#emoteListSelect option:first').prop('selected', true);
 						selList.trigger('change');
