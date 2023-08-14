@@ -3602,6 +3602,7 @@ $("#chatline, #chatbtn").unbind();
 	$('#chatline').on('blur', function (e) {
 		state.focusOnChat = false;
 
+		console.log(state);
 		if (!state.mouseOverEmoteList)
 			closeList();
 	});
@@ -3611,8 +3612,10 @@ $("#chatline, #chatbtn").unbind();
 	});
 
 	function closeList() {
+		console.log(state);
 		if (!state.ctrlPressed) {
 			selList.remove();
+			state.focusOnEmoteList = state.mouseOverEmoteList = false;
 		}
 	}
 
