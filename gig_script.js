@@ -3737,11 +3737,10 @@ $("#chatbtn").on("click", function () {
 	let FONT_BOLD = true;
 	let FONT = "Verdana";
 
+	$('#videowrap').on('resize', function (e) { adjustCanvasSize(); });
 	$('#videowrap').prepend($(`<canvas id="kinooo" style="border: 1px solid red; position: absolute; pointer-events: none;"></canvas>`));
 	let canvas = document.getElementById('kinooo');
-	let videContainer = $('#videowrap > .embed-responsive.embed-responsive-16by9');
-	canvas.width = videContainer.width();
-	canvas.height = videContainer.height();
+	adjustCanvasSize();
 
 	let ctx = canvas.getContext('2d');
 
@@ -3751,7 +3750,7 @@ $("#chatbtn").on("click", function () {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		for (let msg of msgQueue) {
-			msg.x -= MSG_SPEED; //scroll speed
+			msg.x -= MSG_SPEED; // horizontal speed
 
 			if (msg.y <= FONT_SIZE) //prevent clipping on top
 				msg.y += FONT_SIZE;
@@ -3770,7 +3769,7 @@ $("#chatbtn").on("click", function () {
 			ctx.strokeText(msg.text, msg.x, msg.y);
 
 			if (msg.img) {
-				//											img-height font-size/2
+				//img-height font-size/2
 				ctx.drawImage(msg.img, msg.x + textW + 10, msg.y - 50 - 20, 100, 100);
 			}
 		}
@@ -3780,10 +3779,11 @@ $("#chatbtn").on("click", function () {
 
 	loop();
 
+
 	$("#messagebuffer").bind("DOMNodeInserted", function (e) {
 		// need to process all elements, in case of (text emote text emote text)
-		var msg = e.target.querySelector('.chat-msg-doomkek span:nth-child(2)').textContent;
-		var imgSrc = e.target.querySelector('.chat-msg-doomkek img.channel-emote').getAttribute('src');
+		var msg = e.target.querySelector('span:nth-child(2)').textContent;
+		var imgSrc = e.target.querySelector('img.channel-emote').getAttribute('src');
 
 		let comment = {
 			text: msg,
@@ -3801,9 +3801,19 @@ $("#chatbtn").on("click", function () {
 			};
 		}
 		else {
-			msgQueue.push(comment);
+			let comment = {
+				text: msg,
+				x: canvas.width,
+				y: Math.random() * canvas.height
+			};
 		}
 	});
+
+	function adjustCanvasSize() {
+		let videContainer = $('#videowrap > .embed-responsive.embed-responsive-16by9');
+		canvas.width = videContainer.width();
+		canvas.height = videContainer.height();
+	}
 })();
 
 // fix layout behaviour after resizing
