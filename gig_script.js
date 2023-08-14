@@ -214,7 +214,7 @@ RandomQuotes_Array = [
 
 AskAnswers_Array = [
 	'ladyningguang Roll for who you like.', 'ladyningguang Roll for who is meta.', 'ladyningguang Fuck rolling for who you like!', 'ladyningguang Roll for Hu you like.', 'ladyningguang Roll for who isn\'t meta.', 'ladyningguang Roll for Eula.', 'ladyningguang Roll for Dehya.', 'ladyningguang Roll for standard characters.', 'ladyningguang Roll for Furina.',
-	'ladyningguang Roll for everyone.', 'ladyningguang Don\'t roll for anyone.', 'ladyningguang Roll for who you dislike.', 'ladyningguang Roll for who /gig/ likes.', 'ladyningguang Roll for males.', 'ladyningguang Roll for lolis.', 'ladyningguang Roll for futureproof C2R1 Raiden.', 'ladyningguang Roll for coom.' , 'ladyningguang Roll for the donut.', 'ladyningguang Roll for literally (You).', 'ladyningguang Roll for C0R0 Hu Tao.', 'ladyningguang Roll for Kaedehara Kazuha.', 'ladyningguang Roll for my account.',
+	'ladyningguang Roll for everyone.', 'ladyningguang Don\'t roll for anyone.', 'ladyningguang Roll for who you dislike.', 'ladyningguang Roll for who /gig/ likes.', 'ladyningguang Roll for males.', 'ladyningguang Roll for lolis.', 'ladyningguang Roll for futureproof C2R1 Raiden.', 'ladyningguang Roll for coom.', 'ladyningguang Roll for the donut.', 'ladyningguang Roll for literally (You).', 'ladyningguang Roll for C0R0 Hu Tao.', 'ladyningguang Roll for Kaedehara Kazuha.', 'ladyningguang Roll for my account.',
 	'ladyningguang Roll for account power', 'ladyningguang Roll for hags.', 'ladyningguang Roll for hebes.', 'ladyningguang This is a Chinese children\'s gacha you faggots.', 'ladyningguang Roll for the Anemo Archon.', 'ladyningguang Roll for abyss.', 'ladyningguang Roll for Archon collection.', 'ladyningguang Roll for Fatui.', 'ladyningguang Roll for tomboys.', 'ladyningguang Roll for flat chests.', 'ladyningguang Roll for fat tits.', 'ladyningguang Roll for Kafka.', 'ladyningguang Roll for who I like.'
 ];
 
@@ -3738,11 +3738,9 @@ $("#chatbtn").on("click", function () {
 	let FONT = "Verdana";
 
 	$('#videowrap').prepend($(`<canvas id="kinooo" style="border: 1px solid red; position: absolute; pointer-events: none; z-index: 999"></canvas>`));
-	$('#videowrap').on('resize', function (e) { adjustCanvasSize(); });
 	let canvas = document.getElementById('kinooo');
 	canvas.height = 600;
 	canvas.width = 800;
-	adjustCanvasSize();
 
 	let ctx = canvas.getContext('2d');
 
@@ -3806,12 +3804,6 @@ $("#chatbtn").on("click", function () {
 			msgQueue.push(comment);
 		}
 	});
-
-	function adjustCanvasSize() {
-		let videContainer = $('#videowrap > .embed-responsive.embed-responsive-16by9');
-		canvas.width = videContainer.width();
-		canvas.height = videContainer.height();
-	}
 })();
 
 // fix layout behaviour after resizing
@@ -3825,6 +3817,11 @@ function resizeStuff() {
 	var h = parseInt(VHEIGHT) - $("#chatline").outerHeight() - 1;
 	$("#messagebuffer").height(h);
 	$("#userlist").height(h);
+
+	var canvas = document.getElementById('kinooo');
+	let videContainer = $('#videowrap');
+	canvas.width = videContainer.width();
+	canvas.height = videContainer.height();
 
 	if (!$("body").hasClass("fluid")) {
 		return;
