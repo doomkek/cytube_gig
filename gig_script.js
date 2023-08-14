@@ -209,13 +209,13 @@ MOTDTabs_Array = [
 ];
 
 RandomQuotes_Array = [
-	'aroundtheworld', 'allmebtw', 'cheldsombrero', 'cheldeheheh', 'chongli', 'cheldreal', 'cheldcry', 'cheldeh'
+	'aroundtheworld', 'cheldallmebtw', 'cheldsombrero', 'cheldeheheh', 'chongli', 'cheldreal', 'cheldcry', 'cheldeh', 'unmatchedcheld ', 'cheldfurina', 'cheldnahida', 'cheldIVDEX', 'cheldlow'
 ];
 
 AskAnswers_Array = [
-	'ladyningguang Roll for who you like.', 'ladyningguang Roll for who is meta.', 'ladyningguang Fuck rolling for who you like!', 'ladyningguang Roll for Hu you like.', 'ladyningguang Roll for who isn\'t meta.',
-	'Lady Ningguang said this: Roll for everyone.', 'Lady Ningguang said this: Don\'t roll for anyone.', 'Lady Ningguang said this: Roll for who you dislike.', 'Lady Ningguang said this: Roll for who /gig/ likes.', 'Lady Ningguang said this: Roll for males.', 'Lady Ningguang said this: Roll for lolis.', 'Lady Ningguang said this: Roll for futureproof C2R1 Raiden.', 'Lady Ningguang said this: Roll for coom.',
-	'Lady Ningguang said this: Roll for account power', 'Lady Ningguang said this: Roll for hags.', 'Lady Ningguang said this: Roll for hebes.', 'Lady Ningguang said this: This is a Chinese children\'s gacha you faggots.', 'Lady Ningguang said this: Roll for the Anemo Archon.', 'Lady Ningguang said this: Roll for abyss.'
+	'ladyningguang Roll for who you like.', 'ladyningguang Roll for who is meta.', 'ladyningguang Fuck rolling for who you like!', 'ladyningguang Roll for Hu you like.', 'ladyningguang Roll for who isn\'t meta.', 'ladyningguang Roll for Eula.', 'ladyningguang Roll for Dehya.', 'ladyningguang Roll for standard characters.', 'ladyningguang Roll for Furina.',
+	'ladyningguang Roll for everyone.', 'ladyningguang Don\'t roll for anyone.', 'ladyningguang Roll for who you dislike.', 'ladyningguang Roll for who /gig/ likes.', 'ladyningguang Roll for males.', 'ladyningguang Roll for lolis.', 'ladyningguang Roll for futureproof C2R1 Raiden.', 'ladyningguang Roll for coom.' , 'ladyningguang Roll for the donut.', 'ladyningguang Roll for literally (You).', 'ladyningguang Roll for C0R0 Hu Tao.', 'ladyningguang Roll for Kaedehara Kazuha.', 'ladyningguang Roll for my account.',
+	'ladyningguang Roll for account power', 'ladyningguang Roll for hags.', 'ladyningguang Roll for hebes.', 'ladyningguang This is a Chinese children\'s gacha you faggots.', 'ladyningguang Roll for the Anemo Archon.', 'ladyningguang Roll for abyss.', 'ladyningguang Roll for Archon collection.', 'ladyningguang Roll for Fatui.', 'ladyningguang Roll for tomboys.', 'ladyningguang Roll for flat chests.', 'ladyningguang Roll for fat tits.', 'ladyningguang Roll for Kafka.', 'ladyningguang Roll for who I like.'
 ];
 
 Memes_Array = [
@@ -980,7 +980,7 @@ function prepareMessage(msg) {
 			rnd = Math.round(Math.random() * (arr.length - 1));
 			msg = arr[rnd];
 
-		} else if (msg.indexOf("!ganyu ") == 0) {
+		} else if (msg.indexOf("!ladyning ") == 0) {
 
 			AskAnswers_Array.length < 1 ? AskAnswers_Array = ['yes', 'no'] : '';
 			rnd = a = Math.round(Math.random() * (AskAnswers_Array.length - 1));
