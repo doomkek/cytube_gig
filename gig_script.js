@@ -3602,7 +3602,6 @@ $("#chatline, #chatbtn").unbind();
 	$('#chatline').on('blur', function (e) {
 		state.focusOnChat = false;
 
-		console.log(state);
 		if (!state.mouseOverEmoteList)
 			closeList();
 	});
@@ -3612,7 +3611,6 @@ $("#chatline, #chatbtn").unbind();
 	});
 
 	function closeList() {
-		console.log(state);
 		if (!state.ctrlPressed) {
 			selList.remove();
 			state.focusOnEmoteList = state.mouseOverEmoteList = false;
@@ -3728,6 +3726,84 @@ $("#chatbtn").on("click", function () {
 	}
 });
 
+
+// danmaku 
+(function () {
+	let MSG_SPEED = 1.6;
+	let FONT_SIZE = 40;
+	let FONT_COLOR = "white";
+	let FONT_OUTLINE_COLOR = "black";
+	let FONT_OUTLINE_WIDTH = 2;
+	let FONT_BOLD = true;
+	let FONT = "Verdana";
+
+	let canvas = document.getElementById('kinooo');
+	let videContainer = $('#videowrap > .embed-responsive.embed-responsive-16by9');
+	canvas.width = videContainer.width();
+	canvas.height = videContainer.height();
+
+	let ctx = canvas.getContext('2d');
+
+	let msgQueue = [];
+
+	function loop() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		for (let msg of msgQueue) {
+			msg.x -= MSG_SPEED; //scroll speed
+
+			if (msg.y <= FONT_SIZE) //prevent clipping on top
+				msg.y += FONT_SIZE;
+
+			if (msg.y > canvas.height - FONT_SIZE) //prevent clipping on bottom
+				msg.y -= FONT_SIZE;
+
+			ctx.fillStyle = FONT_COLOR;
+			ctx.strokeStyle = FONT_OUTLINE_COLOR;
+			ctx.lineWidth = FONT_OUTLINE_WIDTH;
+			ctx.font = `${FONT_BOLD ? 'bold' : ''} ${FONT_SIZE}px ${FONT}`;
+
+			let textW = ctx.measureText(msg.text).width;
+
+			ctx.fillText(msg.text, msg.x, msg.y);
+			ctx.strokeText(msg.text, msg.x, msg.y);
+
+			if (msg.img) {
+				//											img-height font-size/2
+				ctx.drawImage(msg.img, msg.x + textW + 10, msg.y - 50 - 20, 100, 100);
+			}
+		}
+
+		requestAnimationFrame(loop);
+	}
+
+	loop();
+
+	$("#messagebuffer").bind("DOMNodeInserted", function (e) {
+		// need to process all elements, in case of (text emote text emote text)
+		var msg = e.target.querySelector('.chat-msg-doomkek span:nth-child(2)').textContent;
+		var imgSrc = e.target.querySelector('.chat-msg-doomkek img.channel-emote').getAttribute('src');
+
+		let comment = {
+			text: msg,
+			x: canvas.width,
+			y: Math.random() * canvas.height,
+		};
+
+		if (imgSrc) {
+
+			let img = new Image();
+			img.src = imgSrc;
+			img.onload = function () {
+				comment.img = img;
+				msgQueue.push(comment);
+			};
+		}
+		else {
+			msgQueue.push(comment);
+		}
+	});
+})();
 
 // fix layout behaviour after resizing
 // DEV NOTE: this is extended function from CyTube "util.js" file
