@@ -3782,8 +3782,9 @@ $("#chatbtn").on("click", function () {
 
 	$("#messagebuffer").bind("DOMNodeInserted", function (e) {
 		// need to process all elements, in case of (text emote text emote text)
-		var msg = e.target.querySelector('span:nth-child(2)').textContent;
-		var imgSrc = e.target.querySelector('img.channel-emote').getAttribute('src');
+		let msg = e.target.querySelector('span:nth-child(2)').textContent;
+		let imgElem = e.target.querySelector('img.channel-emote');
+		let imgSrc = imgElem ? imgElem.getAttribute('src') : undefined;
 
 		let comment = {
 			text: msg,
@@ -3792,7 +3793,6 @@ $("#chatbtn").on("click", function () {
 		};
 
 		if (imgSrc) {
-
 			let img = new Image();
 			img.src = imgSrc;
 			img.onload = function () {
@@ -3801,11 +3801,7 @@ $("#chatbtn").on("click", function () {
 			};
 		}
 		else {
-			let comment = {
-				text: msg,
-				x: canvas.width,
-				y: Math.random() * canvas.height
-			};
+			msgQueue.push(comment);
 		}
 	});
 
