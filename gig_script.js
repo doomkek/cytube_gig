@@ -3737,9 +3737,11 @@ $("#chatbtn").on("click", function () {
 	let FONT_BOLD = true;
 	let FONT = "Verdana";
 
+	$('#videowrap').prepend($(`<canvas id="kinooo" style="border: 1px solid red; position: absolute; pointer-events: none; z-index: 999"></canvas>`));
 	$('#videowrap').on('resize', function (e) { adjustCanvasSize(); });
-	$('#videowrap').prepend($(`<canvas id="kinooo" style="border: 1px solid red; position: absolute; pointer-events: none;"></canvas>`));
 	let canvas = document.getElementById('kinooo');
+	canvas.height = 600;
+	canvas.width = 800;
 	adjustCanvasSize();
 
 	let ctx = canvas.getContext('2d');
