@@ -3491,11 +3491,23 @@ $("#chatline, #chatbtn").unbind();
 	let selList = $('#emoteListSelect');
 	let selectedEmote = {};
 	let emoteName = '';
-	let selectingEmote = false;
+
+	let state = {
+		focusOnChat: false,
+		focusOnEmoteList: false,
+		ctrlPressed: false,
+		selectingEmote: () => state.focusOnChat || state.focusOnEmoteList
+	};
+
+	$(document).on('keyup', function (e) {
+		state.ctrlPressed = e.ctrlKey;
+	});
 
 	$('#chatline').on('keydown', function (e) {
+		state.ctrlPressed = e.ctrlKey;
+
 		if (e.keyCode == 38 || e.keyCode == 40) { //up | down
-			if (selectingEmote) {
+			if (state.selectingEmote()) {
 				e.stopPropagation();
 				e.preventDefault();
 
@@ -3511,11 +3523,11 @@ $("#chatline, #chatbtn").unbind();
 			}
 		}
 		else if (e.keyCode == 13 || e.keyCode == 9) { //enter or tab
-			if (selectingEmote) {
+			if (state.selectingEmote()) {
 				e.stopPropagation();
 				e.preventDefault();
 
-				insertEmote(e.ctrlKey);
+				insertEmote();
 			}
 		}
 		else if (e.keyCode == 27) { //escape
@@ -3555,12 +3567,14 @@ $("#chatline, #chatbtn").unbind();
 						let opt = $(`<div class="list-option"><img src=${emote.image} heigt="35px" width="35px">${emote.name}</div>`);
 
 						opt.on('click', function (e) {
+							state.ctrlPressed = e.ctrlKey;
+							state.focusOnEmoteList = true;
+
 							selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(e.target).text());
 
-							insertEmote(e.ctrlKey);
-							
-							if (!e.ctrlKey)
-								chat.focus();
+							insertEmote();
+
+							chat.focus();
 						});
 
 						selList.append(opt);
@@ -3572,12 +3586,12 @@ $("#chatline, #chatbtn").unbind();
 						selectedEmote = CHANNEL.emotes.find(emote => emote.name == $('.list-option.selected').text());
 					});
 
-					selList.on('mouseover', function () { selectingEmote = true; })
-					selList.on('mouseleave', function () { selectingEmote = false; });
+					selList.on('mouseover', function () { state.focusOnEmoteList = true; })
+					selList.on('mouseleave', function () { state.focusOnEmoteList = false; });
 
 					selList.trigger('change');
 
-					selectingEmote = true;
+					state.focusOnChat = true;
 				}
 				else {
 					closeList();
@@ -3589,26 +3603,24 @@ $("#chatline, #chatbtn").unbind();
 		}
 	});
 
-	$('#chatline').on('mouseleave', function () { selectingEmote = false; });
+	$('#chatline').on('mouseleave', function () { state.focusOnChat = false; });
 	$('#chatline').on('blur', function (e) {
-		console.log(selectingEmote);
-		if (!selectingEmote) {
+		state.focusOnChat = false;
+		if (state.focusOnEmoteList == false)
 			closeList();
-		}
 	});
 
 	$('#chatline').on('focus', function () {
-		console.log(selectingEmote);
 		$('#chatline').trigger('input');
 	});
 
 	function closeList() {
-		console.log(selectingEmote);
-		selectingEmote = false;
-		selList.remove();
+		if (!state.ctrlPressed) {
+			selList.remove();
+		}
 	}
 
-	function insertEmote(isCtrlKeyPressed) {
+	function insertEmote() {
 		let msg = chat.val();
 		let index = msg.lastIndexOf(`:${emoteName}`);
 
@@ -3620,9 +3632,7 @@ $("#chatline, #chatbtn").unbind();
 
 		chat.val(msg + selectedEmote.name + " ");
 
-		if (!isCtrlKeyPressed) {
-			closeList();
-		}
+		closeList();
 	}
 
 	function ensureScroll(parent, target) {
