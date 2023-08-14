@@ -3763,14 +3763,19 @@ $("#chatbtn").on("click", function () {
 			ctx.lineWidth = FONT_OUTLINE_WIDTH;
 			ctx.font = `${FONT_BOLD ? 'bold' : ''} ${FONT_SIZE}px ${FONT}`;
 
-			let textW = ctx.measureText(msg.text).width;
-
-			ctx.fillText(msg.text, msg.x, msg.y);
-			ctx.strokeText(msg.text, msg.x, msg.y);
-
-			if (msg.img) {
-				//img-height font-size/2
-				ctx.drawImage(msg.img, msg.x + textW + 10, msg.y - 50 - 20, 100, 100);
+			let rowW = 0;
+			for (let i = 0; i < msg.content.length; i++) {
+				let data = msg.content[i];
+				if (data.t == 1) {
+					ctx.fillText(data.v, msg.x + rowW, msg.y);
+					ctx.strokeText(data.v, msg.x + rowW, msg.y);
+					rowW += ctx.measureText(data.v.trim()).width;
+				}
+				else if (data.t == 2) {
+					//img-height font-size/2
+					ctx.drawImage(data.v, msg.x + rowW + 10, msg.y - 50 - 20, data.v.width, data.v.height);
+					rowW += data.v.width;
+				}
 			}
 		}
 
@@ -3779,30 +3784,54 @@ $("#chatbtn").on("click", function () {
 
 	loop();
 
-
 	$("#messagebuffer").bind("DOMNodeInserted", function (e) {
-		// need to process all elements, in case of (text emote text emote text)
-		let msg = e.target.querySelector('span:nth-child(2)').textContent;
-		let imgElem = e.target.querySelector('img.channel-emote');
-		let imgSrc = imgElem ? imgElem.getAttribute('src') : undefined;
+		let chatEntry = $(e.target).clone();
+
+		if (chatEntry.find('.server-whisper').length || chatEntry.find('span.action').length) { // filter system messages 
+			return;
+		}
+
+		if (chatEntry.find('strong.username').length) { // chat entry that starts with username
+			chatEntry.find('strong.username').remove();
+		}
+
+		if (chatEntry.find('span.timestamp').length) {
+			chatEntry.find('span.timestamp').remove();
+		}
 
 		let comment = {
-			text: msg,
+			content: [],
 			x: canvas.width,
 			y: Math.random() * canvas.height,
 		};
 
-		if (imgSrc) {
-			let img = new Image();
-			img.src = imgSrc;
-			img.onload = function () {
-				comment.img = img;
-				msgQueue.push(comment);
-			};
-		}
-		else {
+		let childNodes = chatEntry.contents().last().contents();
+
+		let msgIndex = 0;
+		let imgAwaitCount = 0;
+		childNodes.each((index, node) => {
+			if ((node.nodeName == 'span' || node.nodeName == '#text') && node.textContent.length > 0)
+				comment.content.push({ i: msgIndex++, t: 1, v: node.textContent });
+
+			if (node.nodeName == 'IMG') {
+				let img = new Image();
+				img.src = node.src;
+				let j = comment.content.push({ i: msgIndex++, t: 2, v: null });
+				imgAwaitCount++;
+				img.onload = function () {
+					comment.content[j - 1].v = img;
+					imgAwaitCount--
+
+					if (imgAwaitCount == 0) {
+						comment.content.sort((a, b) => a - b);
+						msgQueue.push(comment);
+					}
+				};
+			}
+		});
+
+		if (imgAwaitCount == 0)
 			msgQueue.push(comment);
-		}
 	});
 })();
 
