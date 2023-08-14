@@ -3737,6 +3737,7 @@ $("#chatbtn").on("click", function () {
 	let FONT_BOLD = true;
 	let FONT = "Verdana";
 
+	$('#videowrap').prepend($(`<canvas id="kinooo" style="border: 1px solid red; position: absolute; pointer-events: none;"></canvas>`));
 	let canvas = document.getElementById('kinooo');
 	let videContainer = $('#videowrap > .embed-responsive.embed-responsive-16by9');
 	canvas.width = videContainer.width();
