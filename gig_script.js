@@ -3850,9 +3850,8 @@ function resizeStuff() {
 	$("#userlist").height(h);
 
 	var canvas = document.getElementById('kinooo');
-	let videContainer = $('#videowrap .embed-responsive.embed-responsive-16by9');
-	canvas.width = videContainer.width();
-	canvas.height = videContainer.height();
+	canvas.width = VWIDTH;
+	canvas.height = VHEIGHT;
 
 	if (!$("body").hasClass("fluid")) {
 		return;
