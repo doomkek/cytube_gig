@@ -3758,7 +3758,7 @@ danmakuConfig = {
 			ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas on each frame before drawing new stuff
 
 			for (let msg of msgQueue) {
-				msg.x -= dc.MSG_SPEED; // horizontal speed, that is being added each frame
+				let speed = dc.MSG_SPEED;
 
 				if (msg.y <= dc.FONT_SIZE) //prevent clipping on top
 					msg.y += dc.FONT_SIZE;
@@ -3782,7 +3782,8 @@ danmakuConfig = {
 						ctx.fillText(data.v, msg.x + rowW, msg.y); // text, X + cummulative offset, Y
 						ctx.strokeText(data.v, msg.x + rowW, msg.y); // same but for text outline 
 
-						rowW += ctx.measureText(data.v).width; // add text width to cummulative offset
+						let mW = ctx.measureText(data.v).width; // get width of the string with current font settings
+						rowW += mW; // add text width to cummulative offset
 					}
 					else if (data.t == 2) { // 2 = emote
 						ctx.drawImage(
@@ -3795,6 +3796,13 @@ danmakuConfig = {
 						rowW += data.v.width; // add image width to cummulative offset
 					}
 				}
+
+				// horizontal speed, that is being added each frame
+				// +2 or -2 speed is calculated based on whole row width
+				// the longer is row, the slower it will be
+				// can't be slower/faster than base speed +-2
+				speed -= adjustScrollSpeed(rowW);
+				msg.x -= speed > dc.MSG_SPEED + 2 ? dc.MSG_SPEED + 2 : speed < dc.MSG_SPEED - 2 ? dc.MSG_SPEED : speed;
 			}
 
 			prevTS = ts;
@@ -3857,7 +3865,6 @@ danmakuConfig = {
 						imgAwaitCount--
 
 						if (imgAwaitCount == 0) {
-							//comment.content.sort((a, b) => a - b);
 							msgQueue.push(comment);
 						}
 					};
@@ -3884,6 +3891,18 @@ danmakuConfig = {
 				return state / 2147483647;
 			}
 		};
+	}
+
+	function adjustScrollSpeed(messageWidth) {
+		if (messageWidth < 1)
+			messageWidth == 1;
+
+		if (messageWidth > 1000)
+			messageWidth == 1000;
+
+		let normalized = (messageWidth - 1) / 1000;
+
+		return normalized * 4 - 2;
 	}
 })();
 
