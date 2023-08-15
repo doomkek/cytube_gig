@@ -3850,14 +3850,15 @@ danmakuConfig = {
 		let imgAwaitCount = 0;
 
 		try {
+			let color = 'white';
+
 			childNodes.each((index, node) => {
 				if ((node.nodeName == 'span' || node.nodeName == '#text') && node.textContent.length > 0) {
 					let text = node.textContent;
 
 					if (msgIndex == 0 && (text.startsWith('!') || text.startsWith('➥')))
 						throw "stop";
-
-					let color = text.startsWith('>') ? '#789922' /* or as i call it '4chan green' */ : dc.COLORS[Math.floor(rng.next() * dc.COLORS.length)];
+					color = text.startsWith('>') || color == '#789922' ? '#789922' : dc.COLORS[Math.floor(rng.next() * dc.COLORS.length)];
 					comment.content.push({ i: msgIndex++, t: 1, v: node.textContent, c: color });
 				}
 
