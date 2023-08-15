@@ -3835,26 +3835,37 @@ danmakuConfig = {
 
 		let msgIndex = 0;
 		let imgAwaitCount = 0;
-		childNodes.each((index, node) => {
-			if ((node.nodeName == 'span' || node.nodeName == '#text') && node.textContent.length > 0)
-				comment.content.push({ i: msgIndex++, t: 1, v: node.textContent });
 
-			if (node.nodeName == 'IMG') {
-				let img = new Image();
-				img.src = node.src;
-				let j = comment.content.push({ i: msgIndex++, t: 2, v: null });
-				imgAwaitCount++;
-				img.onload = function () {
-					comment.content[j - 1].v = img;
-					imgAwaitCount--
+		try {
+			childNodes.each((index, node) => {
+				if ((node.nodeName == 'span' || node.nodeName == '#text') && node.textContent.length > 0) {
+					let text = node.textContent;
 
-					if (imgAwaitCount == 0) {
-						//comment.content.sort((a, b) => a - b);
-						msgQueue.push(comment);
-					}
-				};
-			}
-		});
+					if (msgIndex == 0 && (text.startsWith('!') || text.startsWith('➥')))
+						throw "stop";
+
+					comment.content.push({ i: msgIndex++, t: 1, v: node.textContent });
+				}
+
+				if (node.nodeName == 'IMG') {
+					let img = new Image();
+					img.src = node.src;
+					let j = comment.content.push({ i: msgIndex++, t: 2, v: null });
+					imgAwaitCount++;
+					img.onload = function () {
+						comment.content[j - 1].v = img;
+						imgAwaitCount--
+
+						if (imgAwaitCount == 0) {
+							//comment.content.sort((a, b) => a - b);
+							msgQueue.push(comment);
+						}
+					};
+				}
+			});
+		} catch (error) {
+			return;
+		}
 
 		if (imgAwaitCount == 0)
 			msgQueue.push(comment);
