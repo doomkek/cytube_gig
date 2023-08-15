@@ -3726,16 +3726,18 @@ $("#chatbtn").on("click", function () {
 	}
 });
 
-
+let danmakuConfig = {
+	MSG_SPEED: 1.6,
+	FONT_SIZE: 40,
+	FONT_COLOR: "white",
+	FONT_OUTLINE_COLOR: "black",
+	FONT_OUTLINE_WIDTH: 2,
+	FONT_BOLD: true,
+	FONT: "Verdana",
+};
 // danmaku 
 (function () {
-	let MSG_SPEED = 1.6;
-	let FONT_SIZE = 40;
-	let FONT_COLOR = "white";
-	let FONT_OUTLINE_COLOR = "black";
-	let FONT_OUTLINE_WIDTH = 2;
-	let FONT_BOLD = true;
-	let FONT = "Verdana";
+	let dc = danmakuConfig
 
 	$('#videowrap').prepend($(`<canvas id="kinooo" style="border: 1px solid red; position: absolute; pointer-events: none; z-index: 999"></canvas>`));
 	let canvas = document.getElementById('kinooo');
@@ -3752,16 +3754,16 @@ $("#chatbtn").on("click", function () {
 		for (let msg of msgQueue) {
 			msg.x -= MSG_SPEED; // horizontal speed
 
-			if (msg.y <= FONT_SIZE) //prevent clipping on top
-				msg.y += FONT_SIZE;
+			if (msg.y <= dc.FONT_SIZE) //prevent clipping on top
+				msg.y += dc.FONT_SIZE;
 
-			if (msg.y > canvas.height - FONT_SIZE) //prevent clipping on bottom
-				msg.y -= FONT_SIZE;
+			if (msg.y > canvas.height - dc.FONT_SIZE) //prevent clipping on bottom
+				msg.y -= dc.FONT_SIZE;
 
-			ctx.fillStyle = FONT_COLOR;
-			ctx.strokeStyle = FONT_OUTLINE_COLOR;
-			ctx.lineWidth = FONT_OUTLINE_WIDTH;
-			ctx.font = `${FONT_BOLD ? 'bold' : ''} ${FONT_SIZE}px ${FONT}`;
+			ctx.fillStyle = dc.FONT_COLOR;
+			ctx.strokeStyle = dc.FONT_OUTLINE_COLOR;
+			ctx.lineWidth = dc.FONT_OUTLINE_WIDTH;
+			ctx.font = `${dc.FONT_BOLD ? 'bold' : ''} ${dc.FONT_SIZE}px ${dc.FONT}`;
 
 			let rowW = 0;
 			for (let i = 0; i < msg.content.length; i++) {
@@ -3772,8 +3774,7 @@ $("#chatbtn").on("click", function () {
 					rowW += ctx.measureText(data.v.trim()).width;
 				}
 				else if (data.t == 2) {
-					//img-height font-size/2
-					ctx.drawImage(data.v, msg.x + rowW + 10, msg.y - 50 - 20, data.v.width, data.v.height);
+					ctx.drawImage(data.v, msg.x + rowW + 10, msg.y - data.v.width - dc.FONT_SIZE / 2, data.v.width, data.v.height);
 					rowW += data.v.width;
 				}
 			}
@@ -3823,7 +3824,7 @@ $("#chatbtn").on("click", function () {
 					imgAwaitCount--
 
 					if (imgAwaitCount == 0) {
-						comment.content.sort((a, b) => a - b);
+						//comment.content.sort((a, b) => a - b);
 						msgQueue.push(comment);
 					}
 				};
@@ -3848,7 +3849,7 @@ function resizeStuff() {
 	$("#userlist").height(h);
 
 	var canvas = document.getElementById('kinooo');
-	let videContainer = $('#videowrap');
+	let videContainer = $('#videowrap .embed-responsive.embed-responsive-16by9');
 	canvas.width = videContainer.width();
 	canvas.height = videContainer.height();
 
