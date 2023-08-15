@@ -3753,7 +3753,7 @@ let danmakuConfig = {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		for (let msg of msgQueue) {
-			msg.x -= MSG_SPEED; // horizontal speed
+			msg.x -= dc.MSG_SPEED; // horizontal speed
 
 			if (msg.y <= dc.FONT_SIZE) //prevent clipping on top
 				msg.y += dc.FONT_SIZE;
