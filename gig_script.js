@@ -3857,7 +3857,8 @@ danmakuConfig = {
 					if (msgIndex == 0 && (text.startsWith('!') || text.startsWith('➥')))
 						throw "stop";
 
-					comment.content.push({ i: msgIndex++, t: 1, v: node.textContent, c: dc.COLORS[Math.floor(rng.next() * dc.COLORS.length)] });
+					let color = text.startsWith('>') ? '#789922' /* or as i call it '4chan green' */ : dc.COLORS[Math.floor(rng.next() * dc.COLORS.length)];
+					comment.content.push({ i: msgIndex++, t: 1, v: node.textContent, c: color });
 				}
 
 				if (node.nodeName == 'IMG') {
