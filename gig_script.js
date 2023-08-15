@@ -3726,6 +3726,7 @@ $("#chatbtn").on("click", function () {
 	}
 });
 
+// danmaku 
 let danmakuConfig = {
 	MSG_SPEED: 1.6,
 	FONT_SIZE: 40,
@@ -3735,7 +3736,7 @@ let danmakuConfig = {
 	FONT_BOLD: true,
 	FONT: "Verdana",
 };
-// danmaku 
+
 (function () {
 	let dc = danmakuConfig
 
