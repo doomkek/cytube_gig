@@ -3857,7 +3857,7 @@ danmakuConfig = {
 					if (msgIndex == 0 && (text.startsWith('!') || text.startsWith('➥')))
 						throw "stop";
 
-					comment.content.push({ i: msgIndex++, t: 1, v: node.textContent, c: dc.COLORS[Math.floor(Math.random() * dc.COLORS.length)] });
+					comment.content.push({ i: msgIndex++, t: 1, v: node.textContent, c: dc.COLORS[Math.floor(rng.next() * dc.COLORS.length)] });
 				}
 
 				if (node.nodeName == 'IMG') {
