@@ -3727,7 +3727,7 @@ $("#chatbtn").on("click", function () {
 });
 
 // danmaku 
-let danmakuConfig = {
+danmakuConfig = {
 	MSG_SPEED: 1.6,
 	FONT_SIZE: 40,
 	FONT_COLOR: "white",
@@ -3740,7 +3740,7 @@ let danmakuConfig = {
 (function () {
 	let dc = danmakuConfig
 
-	$('#videowrap').prepend($(`<canvas id="kinooo" style="border: 1px solid red; position: absolute; pointer-events: none; z-index: 999"></canvas>`));
+	$('#videowrap').prepend($(`<canvas id="kinooo" style="position: absolute; pointer-events: none; margin-top:20px; z-index: 999"></canvas>`));
 	let canvas = document.getElementById('kinooo');
 	canvas.height = 600;
 	canvas.width = 800;
