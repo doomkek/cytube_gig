@@ -3803,6 +3803,10 @@ danmakuConfig = {
 				// can't be slower/faster than base speed +-2
 				speed -= adjustScrollSpeed(rowW);
 				msg.x -= speed > dc.MSG_SPEED + 2 ? dc.MSG_SPEED + 2 : speed < dc.MSG_SPEED - 2 ? dc.MSG_SPEED : speed;
+
+				if (msg.x < -(rowW + 100)) {
+					msgQueue.splice(msgQueue.indexOf(msg), 1);
+				}
 			}
 
 			prevTS = ts;
