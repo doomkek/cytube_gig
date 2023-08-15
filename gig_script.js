@@ -3767,8 +3767,7 @@ var danmakucolors= ['white', 'white', 'white', 'blue', 'green', 'red'];
 				if (msg.y > canvas.height - dc.FONT_SIZE) //prevent clipping on bottom
 					msg.y -= dc.FONT_SIZE;
 
-				dc.FONT_COLOR = danmakucolors[Math.floor(Math.random() * danmakucolors.length)];
-				ctx.fillStyle = dc.FONT_COLOR;
+				ctx.fillStyle = msg.c;
 				ctx.strokeStyle = dc.FONT_OUTLINE_COLOR;
 				ctx.lineWidth = dc.FONT_OUTLINE_WIDTH;
 				ctx.font = `${dc.FONT_BOLD ? 'bold' : ''} ${dc.FONT_SIZE}px ${dc.FONT}`;
