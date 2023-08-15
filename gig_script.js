@@ -3775,7 +3775,13 @@ danmakuConfig = {
 					rowW += ctx.measureText(data.v.trim()).width;
 				}
 				else if (data.t == 2) {
-					ctx.drawImage(data.v, msg.x + rowW + 10, msg.y - data.v.width - dc.FONT_SIZE / 2, data.v.width, data.v.height);
+					ctx.drawImage(
+						data.v, 
+						msg.x + rowW + 10, 
+						msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2), 
+						data.v.width, 
+						data.v.height);
+						
 					rowW += data.v.width;
 				}
 			}
