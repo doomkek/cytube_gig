@@ -3739,7 +3739,6 @@ danmakuConfig = {
 
 (function () {
 	let dc = danmakuConfig
-
 	$('#videowrap').prepend($(`<canvas id="kinooo" style="position: absolute; pointer-events: none; margin-top:20px; z-index: 999"></canvas>`));
 	let canvas = document.getElementById('kinooo');
 	canvas.width = 600;
@@ -3806,6 +3805,8 @@ danmakuConfig = {
 
 	loop();
 
+	let rng = initRandom(CHANNEL.usercount);
+
 	$("#messagebuffer").bind("DOMNodeInserted", function (e) {
 		let chatEntry = $(e.target).clone();
 
@@ -3821,10 +3822,13 @@ danmakuConfig = {
 			chatEntry.find('span.timestamp').remove();
 		}
 
+		if (CHANNEL.usercount != rng.seed)
+			rng = initRandom(CHANNEL.usercount);
+
 		let comment = {
 			content: [],
 			x: canvas.width,
-			y: Math.random() * canvas.height,
+			y: rng.next() * canvas.height,
 		};
 
 		let childNodes = chatEntry.contents().last().contents();
@@ -3855,6 +3859,21 @@ danmakuConfig = {
 		if (imgAwaitCount == 0)
 			msgQueue.push(comment);
 	});
+
+	function initRandom(seed) {
+		let state = seed % 2147483647;
+		if (state <= 0) {
+			state += 2147483646;
+		}
+
+		return {
+			seed: seed,
+			next: function () {
+				state = (state * 16807) % 2147483647;
+				return state / 2147483647;
+			}
+		};
+	}
 })();
 
 // fix layout behaviour after resizing
