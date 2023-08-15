@@ -3740,51 +3740,65 @@ danmakuConfig = {
 (function () {
 	let dc = danmakuConfig
 
-	$('#videowrap').prepend($(`<canvas id="kinooo" style="position: absolute; pointer-events: none; margin-top:20px; z-index: 999"></canvas>`));
+	$('#videowrap').prepend($(`<canvas id="kinooo" style="border: 1px solid red; position: absolute; pointer-events: none; z-index: 999"></canvas>`));
 	let canvas = document.getElementById('kinooo');
-	canvas.height = 600;
-	canvas.width = 800;
+	canvas.width = 600;
+	canvas.height = 500;
 
 	let ctx = canvas.getContext('2d');
-
 	let msgQueue = [];
+	let prevTS = 0;
 
-	function loop() {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
+	function loop(ts) {
+		if (!prevTS)
+			prevTS = ts;
 
-		for (let msg of msgQueue) {
-			msg.x -= dc.MSG_SPEED; // horizontal speed
+		let elapsed = ts - prevTS;
 
-			if (msg.y <= dc.FONT_SIZE) //prevent clipping on top
-				msg.y += dc.FONT_SIZE;
+		if (elapsed > 10) { //10ms is arbitrary number that is required for ~80fps animation
+			ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas on each frame before drawing new stuff
 
-			if (msg.y > canvas.height - dc.FONT_SIZE) //prevent clipping on bottom
-				msg.y -= dc.FONT_SIZE;
+			for (let msg of msgQueue) {
+				msg.x -= dc.MSG_SPEED; // horizontal speed, that is being added each frame
 
-			ctx.fillStyle = dc.FONT_COLOR;
-			ctx.strokeStyle = dc.FONT_OUTLINE_COLOR;
-			ctx.lineWidth = dc.FONT_OUTLINE_WIDTH;
-			ctx.font = `${dc.FONT_BOLD ? 'bold' : ''} ${dc.FONT_SIZE}px ${dc.FONT}`;
+				if (msg.y <= dc.FONT_SIZE) //prevent clipping on top
+					msg.y += dc.FONT_SIZE;
 
-			let rowW = 0;
-			for (let i = 0; i < msg.content.length; i++) {
-				let data = msg.content[i];
-				if (data.t == 1) {
-					ctx.fillText(data.v, msg.x + rowW, msg.y);
-					ctx.strokeText(data.v, msg.x + rowW, msg.y);
-					rowW += ctx.measureText(data.v.trim()).width;
-				}
-				else if (data.t == 2) {
-					ctx.drawImage(
-						data.v, 
-						msg.x + rowW + 10, 
-						msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2), 
-						data.v.width, 
-						data.v.height);
-						
-					rowW += data.v.width;
+				if (msg.y > canvas.height - dc.FONT_SIZE) //prevent clipping on bottom
+					msg.y -= dc.FONT_SIZE;
+
+				ctx.fillStyle = dc.FONT_COLOR;
+				ctx.strokeStyle = dc.FONT_OUTLINE_COLOR;
+				ctx.lineWidth = dc.FONT_OUTLINE_WIDTH;
+				ctx.font = `${dc.FONT_BOLD ? 'bold' : ''} ${dc.FONT_SIZE}px ${dc.FONT}`;
+
+				// accumulative width of the whole message, since message is sliced into text and emotes we need 
+				// to keep track of it current width to insert new text and emotes at correct offfset
+				let rowW = 0;
+
+				for (let i = 0; i < msg.content.length; i++) {
+					let data = msg.content[i];
+
+					if (data.t == 1) { // 1 = text                            
+						ctx.fillText(data.v, msg.x + rowW, msg.y); // text, X + cummulative offset, Y
+						ctx.strokeText(data.v, msg.x + rowW, msg.y); // same but for text outline 
+
+						rowW += ctx.measureText(data.v).width; // add text width to cummulative offset
+					}
+					else if (data.t == 2) { // 2 = emote
+						ctx.drawImage(
+							data.v, // image
+							msg.x + rowW + 10, //X + cummulative offset + 10 (just in case)
+							msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2), //Y - width of the image and - (font height (size) / 2) to make sure emote is rendered in the middle of the meesage on Y axis
+							data.v.width,  // img W
+							data.v.height); // img H
+
+						rowW += data.v.width; // add image width to cummulative offset
+					}
 				}
 			}
+
+			prevTS = ts;
 		}
 
 		requestAnimationFrame(loop);
