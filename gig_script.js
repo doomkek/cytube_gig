@@ -3735,9 +3735,9 @@ danmakuConfig = {
 	FONT_OUTLINE_WIDTH: 2,
 	FONT_BOLD: true,
 	FONT: "Verdana",
+	COLORS: ['white', 'white', 'white', 'blue', 'green', 'red'],
 };
 
-var danmakucolors= ['white', 'white', 'white', 'blue', 'green', 'red'];
 (function () {
 	let dc = danmakuConfig
 	$('#videowrap').prepend($(`<canvas id="kinooo" style="position: absolute; pointer-events: none; margin-top:20px; z-index: 999"></canvas>`));
@@ -3767,7 +3767,6 @@ var danmakucolors= ['white', 'white', 'white', 'blue', 'green', 'red'];
 				if (msg.y > canvas.height - dc.FONT_SIZE) //prevent clipping on bottom
 					msg.y -= dc.FONT_SIZE;
 
-				ctx.fillStyle = msg.c;
 				ctx.strokeStyle = dc.FONT_OUTLINE_COLOR;
 				ctx.lineWidth = dc.FONT_OUTLINE_WIDTH;
 				ctx.font = `${dc.FONT_BOLD ? 'bold' : ''} ${dc.FONT_SIZE}px ${dc.FONT}`;
@@ -3778,6 +3777,7 @@ var danmakucolors= ['white', 'white', 'white', 'blue', 'green', 'red'];
 
 				for (let i = 0; i < msg.content.length; i++) {
 					let data = msg.content[i];
+					ctx.fillStyle = data.c;
 
 					if (data.t == 1) { // 1 = text                            
 						ctx.fillText(data.v, msg.x + rowW, msg.y); // text, X + cummulative offset, Y
@@ -3856,8 +3856,8 @@ var danmakucolors= ['white', 'white', 'white', 'blue', 'green', 'red'];
 
 					if (msgIndex == 0 && (text.startsWith('!') || text.startsWith('➥')))
 						throw "stop";
-                                        
-					comment.content.push({ i: msgIndex++, t: 1, v: node.textContent, c: danmakucolors[Math.floor(Math.random() * danmakucolors.length)] });
+
+					comment.content.push({ i: msgIndex++, t: 1, v: node.textContent, c: dc.COLORS[Math.floor(Math.random() * dc.COLORS.length)] });
 				}
 
 				if (node.nodeName == 'IMG') {
