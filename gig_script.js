@@ -3737,6 +3737,7 @@ danmakuConfig = {
 	FONT: "Verdana",
 };
 
+var danmakucolors= ['white', 'white', 'white', 'blue', 'green', 'red'];
 (function () {
 	let dc = danmakuConfig
 	$('#videowrap').prepend($(`<canvas id="kinooo" style="position: absolute; pointer-events: none; margin-top:20px; z-index: 999"></canvas>`));
@@ -3766,6 +3767,7 @@ danmakuConfig = {
 				if (msg.y > canvas.height - dc.FONT_SIZE) //prevent clipping on bottom
 					msg.y -= dc.FONT_SIZE;
 
+				dc.FONT_COLOR = danmakucolors[Math.floor(Math.random() * danmakucolors.length)];
 				ctx.fillStyle = dc.FONT_COLOR;
 				ctx.strokeStyle = dc.FONT_OUTLINE_COLOR;
 				ctx.lineWidth = dc.FONT_OUTLINE_WIDTH;
@@ -3855,8 +3857,8 @@ danmakuConfig = {
 
 					if (msgIndex == 0 && (text.startsWith('!') || text.startsWith('➥')))
 						throw "stop";
-
-					comment.content.push({ i: msgIndex++, t: 1, v: node.textContent });
+                                        
+					comment.content.push({ i: msgIndex++, t: 1, v: node.textContent, c: danmakucolors[Math.floor(Math.random() * danmakucolors.length)] });
 				}
 
 				if (node.nodeName == 'IMG') {
