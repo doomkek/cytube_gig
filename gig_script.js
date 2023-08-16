@@ -3787,7 +3787,7 @@ danmakuConfig = {
 						let mW = ctx.measureText(data.v).width; // get width of the string with current font settings
 						rowW += mW; // add text width to cummulative offset
 					}
-					else if (data.t == 2) { // 2 = emote
+					else if (data.t == 2) { // 2 = image
 						ctx.drawImage(
 							data.v, // image
 							msg.x + rowW + 10, //X + cummulative offset + 10 (just in case)
@@ -3796,6 +3796,20 @@ danmakuConfig = {
 							data.v.height); // img H
 
 						rowW += data.v.width; // add image width to cummulative offset
+					}
+					else if (data.t == 3) { // 3 = gif (gf ;_;)
+						data.gifContainer = data.gifContainer ?? $(`<img src="${data.v.src}">`);
+						let gif = data.gifContainer;
+						gif.css("position", "absolute");
+						gif.css("z-index", 1000);
+						$('#videowrap').append(gif);
+
+						gif.css({
+							left: msg.x + rowW + 10 + 'px',
+							top: msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2) + 'px'
+						});
+
+						rowW += data.v.width
 					}
 				}
 
@@ -3808,6 +3822,11 @@ danmakuConfig = {
 
 				if (msg.x < -(rowW + 100)) {
 					msgQueue.splice(msgQueue.indexOf(msg), 1);
+
+					let gifsToDispose = msg.content.filter(elem => elem.gifContainer);
+					if (gifsToDispose) {
+						gifsToDispose.forEach(gif => gif.gifContainer.remove());
+					}
 				}
 			}
 
@@ -3859,6 +3878,7 @@ danmakuConfig = {
 
 					if (msgIndex == 0 && (text.startsWith('!') || text.startsWith('➥')))
 						throw "stop";
+
 					color = text.startsWith('>') || color == '#789922' ? '#789922' : dc.COLORS[Math.floor(rng.next() * dc.COLORS.length)];
 					comment.content.push({ i: msgIndex++, t: 1, v: node.textContent, c: color });
 				}
@@ -3866,7 +3886,7 @@ danmakuConfig = {
 				if (node.nodeName == 'IMG') {
 					let img = new Image();
 					img.src = node.src;
-					let j = comment.content.push({ i: msgIndex++, t: 2, v: null });
+					let j = comment.content.push({ i: msgIndex++, t: node.src.toString().toLowerCase().endsWith('.gif') ? 3 : 2, v: null });
 					imgAwaitCount++;
 					img.onload = function () {
 						comment.content[j - 1].v = img;
