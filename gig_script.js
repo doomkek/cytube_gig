@@ -3742,7 +3742,7 @@ danmakuConfig = {
 	let dc = danmakuConfig;
 	let vw = $('#videowrap');
 	vw.prepend($(`<canvas id="kinooo" style="position: absolute; pointer-events: none; margin-top:20px; z-index: 999"></canvas>`));
-	
+
 	let canvas = document.getElementById('kinooo');
 	canvas.width = 600;
 	canvas.height = 500;
@@ -3815,14 +3815,13 @@ danmakuConfig = {
 
 							div.css({
 								left: `${vwOffsetLeft + canvas.width - data.v.width}px`,
-								top: msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2) + 'px'
+								top: Math.floor(msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2)) + 'px'
 							});
-
 
 							gif = $(data.gifContainer).find('img');
 							gif.css('transform', `translateX(${msg.x + vwOffsetLeft + rowW + 10}px)`);
 
-							$('#videowrap').append(div);
+							$('body').append(div);
 						}
 						else {
 							div = $(data.gifContainer);
@@ -3837,7 +3836,7 @@ danmakuConfig = {
 						else if (div.offset().left >= vwOffsetLeft) {
 							div.css({
 								left: `${l + data.v.width}px`,
-								top: msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2) + 'px'
+								top: Math.floor(msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2)) + 'px'
 							});
 							div.css('border', '1px solid red');
 						}
