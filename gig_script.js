@@ -3756,6 +3756,7 @@ danmakuConfig = {
 			prevTS = ts;
 
 		let vwOffsetLeft = vw[0].offsetLeft + parseInt(vw.css('padding-left'));
+		let vwOffsetTop = vw[0].offsetTop + parseInt(vw.css('padding-top'));
 		let elapsed = ts - prevTS;
 
 		if (elapsed > 10) { //10ms is arbitrary number that is required for ~80fps animation
@@ -3815,7 +3816,7 @@ danmakuConfig = {
 
 							div.css({
 								left: `${vwOffsetLeft + canvas.width - data.v.width}px`,
-								top: Math.floor(msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2)) + 'px'
+								top: Math.floor(msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2)) + vwOffsetTop + 'px'
 							});
 
 							gif = $(data.gifContainer).find('img');
@@ -3836,7 +3837,7 @@ danmakuConfig = {
 						else if (div.offset().left >= vwOffsetLeft) {
 							div.css({
 								left: `${l + data.v.width}px`,
-								top: Math.floor(msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2)) + 'px'
+								top: Math.floor(msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2)) + vwOffsetTop + 'px'
 							});
 							div.css('border', '1px solid red');
 						}
