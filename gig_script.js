@@ -3798,16 +3798,50 @@ danmakuConfig = {
 						rowW += data.v.width; // add image width to cummulative offset
 					}
 					else if (data.t == 3) { // 3 = gif (gf ;_;)
-						data.gifContainer = data.gifContainer ?? $(`<img src="${data.v.src}">`);
-						let gif = data.gifContainer;
-						gif.css("position", "absolute");
-						gif.css("z-index", 1000);
-						$('#videowrap').append(gif);
+						let div, gif;
 
-						gif.css({
-							left: msg.x + rowW + 10 + 'px',
-							top: msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2) + 'px'
-						});
+						if (!data.gifContainer) {
+							data.gifContainer = $(`<div><img src="${data.v.src}"></div>`);
+
+							div = $(data.gifContainer);
+							div.css('width', `${data.v.width}px`);
+							div.css('overflow', 'hidden');
+							div.css("position", "absolute");
+							div.css('border', '1px solid yellow');
+							div.css("z-index", 999);
+
+							div.css({
+								left: `${canvas.offsetLeft + canvas.width - data.v.width}px`,
+								top: msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2) + 'px'
+							});
+
+
+							gif = $(data.gifContainer).find('img');
+							gif.css('transform', `translateX(${msg.x + canvas.offsetLeft + rowW + 10}px)`);
+
+							$('#videowrap').append(div);
+						}
+						else {
+							div = $(data.gifContainer);
+							gif = $(data.gifContainer).find('img');
+						}
+
+						let l = msg.x + canvas.offsetLeft + rowW + 10 - data.v.width;
+
+						if (l > canvas.offsetLeft + canvas.width - data.v.width * 2) {
+							gif.css('transform', `translateX(${Math.floor(l - canvas.width)}px)`);
+						}
+						else if (div.offset().left >= canvas.offsetLeft) {
+							div.css({
+								left: `${l + data.v.width}px`,
+								top: msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2) + 'px'
+							});
+							div.css('border', '1px solid red');
+						}
+						else {
+							div.css('border', '1px solid green');
+							gif.css('transform', `translateX(${Math.floor(msg.x + rowW + 10 + 9)}px)`);
+						}
 
 						rowW += data.v.width
 					}
