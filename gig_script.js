@@ -3739,8 +3739,10 @@ danmakuConfig = {
 };
 
 (function () {
-	let dc = danmakuConfig
-	$('#videowrap').prepend($(`<canvas id="kinooo" style="position: absolute; pointer-events: none; margin-top:20px; z-index: 999"></canvas>`));
+	let dc = danmakuConfig;
+	let vw = $('#videowrap');
+	vw.prepend($(`<canvas id="kinooo" style="position: absolute; pointer-events: none; margin-top:20px; z-index: 999"></canvas>`));
+	
 	let canvas = document.getElementById('kinooo');
 	canvas.width = 600;
 	canvas.height = 500;
@@ -3753,6 +3755,7 @@ danmakuConfig = {
 		if (!prevTS)
 			prevTS = ts;
 
+		let vwOffsetLeft = vw[0].offsetLeft + parseInt(vw.css('padding-left'));
 		let elapsed = ts - prevTS;
 
 		if (elapsed > 10) { //10ms is arbitrary number that is required for ~80fps animation
@@ -3811,13 +3814,13 @@ danmakuConfig = {
 							div.css("z-index", 999);
 
 							div.css({
-								left: `${canvas.offsetLeft + canvas.width - data.v.width}px`,
+								left: `${vwOffsetLeft + canvas.width - data.v.width}px`,
 								top: msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2) + 'px'
 							});
 
 
 							gif = $(data.gifContainer).find('img');
-							gif.css('transform', `translateX(${msg.x + canvas.offsetLeft + rowW + 10}px)`);
+							gif.css('transform', `translateX(${msg.x + vwOffsetLeft + rowW + 10}px)`);
 
 							$('#videowrap').append(div);
 						}
@@ -3826,12 +3829,12 @@ danmakuConfig = {
 							gif = $(data.gifContainer).find('img');
 						}
 
-						let l = msg.x + canvas.offsetLeft + rowW + 10 - data.v.width;
+						let l = msg.x + vwOffsetLeft + rowW + 10 - data.v.width;
 
-						if (l > canvas.offsetLeft + canvas.width - data.v.width * 2) {
-							gif.css('transform', `translateX(${Math.floor(l - canvas.width)}px)`);
+						if (l > vwOffsetLeft + canvas.width - data.v.width * 2) {
+							gif.css('transform', `translateX(${Math.floor(l - (vwOffsetLeft + canvas.width - data.v.width)) + data.v.width}px)`);
 						}
-						else if (div.offset().left >= canvas.offsetLeft) {
+						else if (div.offset().left >= vwOffsetLeft) {
 							div.css({
 								left: `${l + data.v.width}px`,
 								top: msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2) + 'px'
@@ -3840,7 +3843,7 @@ danmakuConfig = {
 						}
 						else {
 							div.css('border', '1px solid green');
-							gif.css('transform', `translateX(${Math.floor(msg.x + rowW + 10 + 9)}px)`);
+							gif.css('transform', `translateX(${Math.floor(msg.x + rowW + 10)}px)`);
 						}
 
 						rowW += data.v.width
