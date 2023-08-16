@@ -3767,6 +3767,7 @@ danmakuConfig = {
 				if (msg.y > canvas.height - dc.FONT_SIZE) //prevent clipping on bottom
 					msg.y -= dc.FONT_SIZE;
 
+				ctx.fillStyle = '#000000';
 				ctx.strokeStyle = dc.FONT_OUTLINE_COLOR;
 				ctx.lineWidth = dc.FONT_OUTLINE_WIDTH;
 				ctx.font = `${dc.FONT_BOLD ? 'bold' : ''} ${dc.FONT_SIZE}px ${dc.FONT}`;
@@ -3777,7 +3778,7 @@ danmakuConfig = {
 
 				for (let i = 0; i < msg.content.length; i++) {
 					let data = msg.content[i];
-					ctx.fillStyle = data.c;
+					ctx.fillStyle = ctx.fillStyle == '#000000' ? data.c : ctx.fillStyle;
 
 					if (data.t == 1) { // 1 = text                            
 						ctx.fillText(data.v, msg.x + rowW, msg.y); // text, X + cummulative offset, Y
