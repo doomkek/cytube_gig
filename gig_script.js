@@ -3811,7 +3811,7 @@ danmakuConfig = {
 							div.css('width', `${data.v.width}px`);
 							div.css('overflow', 'hidden');
 							div.css("position", "absolute");
-							div.css('border', '1px solid yellow');
+							//div.css('border', '1px solid yellow');
 							div.css("z-index", 999);
 
 							div.css({
@@ -3839,10 +3839,10 @@ danmakuConfig = {
 								left: `${l + data.v.width}px`,
 								top: Math.floor(msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2)) + vwOffsetTop + 'px'
 							});
-							div.css('border', '1px solid red');
+							// div.css('border', '1px solid red');
 						}
 						else {
-							div.css('border', '1px solid green');
+							// div.css('border', '1px solid green');
 							gif.css('transform', `translateX(${Math.floor(msg.x + rowW + 10)}px)`);
 						}
 
