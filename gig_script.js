@@ -3865,9 +3865,9 @@ danmakuConfig = {
 					}
 				}
 
-				// horizontal speed, that is being added each frame
+				// horizontal speed
 				let delay = oneFrameMS + (elapsed - oneFrameMS);
-				msg.x -= (canvas.width / dc.MSG_SPEED * delay) + (rowW / dc.MSG_SPEED * delay);
+				msg.x -= (canvas.width / dc.MSG_SPEED_MS * delay) + ((1000 - rowW) / dc.MSG_SPEED_MS * delay);
 
 				if (msg.x < -(rowW + 100)) {
 					msgQueue.splice(msgQueue.indexOf(msg), 1);
@@ -3970,12 +3970,15 @@ danmakuConfig = {
 
 	function initRandom(seed) {
 		let state = seed % 2147483647;
+
 		if (state <= 0) {
 			state += 2147483646;
 		}
+
 		for (let i = 0; i < 10; i++) {
 			state = (state * 16807) % 2147483647;
 		}
+
 		return {
 			seed: seed,
 			next: function () {
@@ -3983,18 +3986,6 @@ danmakuConfig = {
 				return state / 2147483647;
 			}
 		};
-	}
-
-	function adjustScrollSpeed(messageWidth) {
-		if (messageWidth < 1)
-			messageWidth == 1;
-
-		if (messageWidth > 1000)
-			messageWidth == 1000;
-
-		let normalized = (messageWidth - 1) / 1000;
-
-		return normalized * 4 - 2;
 	}
 
 	function calcFPS(a) { function b() { if (f--) c(b); else { var e = 3 * Math.round(1E3 * d / 3 / (performance.now() - g)); "function" === typeof a.callback && a.callback(e); } } var c = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame; if (!c) return !0; a || (a = {}); var d = a.count || 60, f = d, g = performance.now(); b() }
