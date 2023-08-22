@@ -3728,7 +3728,7 @@ $("#chatbtn").on("click", function () {
 
 // danmaku 
 danmakuConfig = {
-	MSG_SPEED: 3000,
+	MSG_SPEED_MS: 3000,
 	MSG_CAP: 100,
 	FONT_COLOR: "white",
 	FONT_OUTLINE_COLOR: "black",
