@@ -3783,7 +3783,7 @@ danmakuConfig = {
 
 				bufferCtx.fillStyle = '#000000';
 				bufferCtx.strokeStyle = dc.FONT_OUTLINE_COLOR;
-				bufferCtx.lineWidth = scaleValue(fontSize, 14, 50, 0.5, 2.5);
+				bufferCtx.lineWidth = scaleValue(fontSize, 20, 50, 1, 2);
 				bufferCtx.font = `${dc.FONT_BOLD ? 'bold' : ''} ${fontSize}px ${dc.FONT}`;
 
 				// accumulative width of the whole message, since message is sliced into text and emotes we need 
@@ -3931,7 +3931,7 @@ danmakuConfig = {
 					if (msgIndex == 0 && (text.startsWith('!') || text.startsWith('➥')))
 						throw "stop";
 
-					color = text.startsWith('>') || color == '#789922' ? '#789922' : dc.COLORS[Math.floor(rng.next() * dc.COLORS.length)];
+					color = text.startsWith('>') || color == '#789922' ? '#789922' : color == '' ? dc.COLORS[Math.floor(rng.next() * dc.COLORS.length)] : color;
 					comment.content.push({ i: msgIndex++, t: 1, v: node.textContent, c: color });
 				}
 
