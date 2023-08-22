@@ -3729,12 +3729,16 @@ $("#chatbtn").on("click", function () {
 // danmaku 
 danmakuConfig = {
 	MSG_SPEED: 3000,
-    MSG_CAP: 500,
+	MSG_CAP: 100,
 	FONT_COLOR: "white",
-	FONT_OUTLINE_COLOR: "black",	
+	FONT_OUTLINE_COLOR: "black",
 	FONT_BOLD: true,
 	FONT: "Verdana",
 	COLORS: ['white', 'white', 'white', 'blue', 'green', 'red'],
+	SIZE: {
+		W: 800,
+		H: 600
+	}
 };
 
 (function () {
@@ -3746,9 +3750,6 @@ danmakuConfig = {
 	let ctx = canvas.getContext('2d');
 	let bufferCanvas = document.createElement('canvas');
 	let bufferCtx = bufferCanvas.getContext('2d');
-
-	bufferCanvas.height = canvas.height = 600;
-	bufferCanvas.width = canvas.width = 800;
 
 	let msgQueue = [];
 	let prevTS = 0;
@@ -3766,6 +3767,8 @@ danmakuConfig = {
 		let elapsed = ts - prevTS;
 
 		if (elapsed > oneFrameMS) {
+			bufferCanvas.width = canvas.width = dc.SIZE.W;
+			bufferCanvas.height = canvas.height = dc.SIZE.H;
 			//$('#msgCount').text(`Message queue: ${msgQueue.length}/${dc.MSG_CAP} FPS:${FPS} Frame MS:${oneFrameMS.toFixed(2)}ms draw: ${elapsed.toFixed(2)}ms `);
 			bufferCtx.clearRect(0, 0, bufferCanvas.width, bufferCanvas.height); // clear canvas on each frame before drawing new stuff
 
@@ -3996,7 +3999,6 @@ danmakuConfig = {
 
 	function calcFPS(a) { function b() { if (f--) c(b); else { var e = 3 * Math.round(1E3 * d / 3 / (performance.now() - g)); "function" === typeof a.callback && a.callback(e); } } var c = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame; if (!c) return !0; a || (a = {}); var d = a.count || 60, f = d, g = performance.now(); b() }
 	function findClosestRefreshRate(n) { let e = [300, 240, 165, 144, 120, 90, 75, 60, 30]; let t = e[0], r = Math.abs(n - t); for (const a of e) { const e = Math.abs(n - a); e < r && (t = a, r = e) } return t };
-
 })();
 
 // fix layout behaviour after resizing
@@ -4011,9 +4013,8 @@ function resizeStuff() {
 	$("#messagebuffer").height(h);
 	$("#userlist").height(h);
 
-	var canvas = document.getElementById('kinooo');
-	canvas.width = VWIDTH;
-	canvas.height = VHEIGHT;
+	danmakuConfig.SIZE.W = VWIDTH;
+	danmakuConfig.SIZE.H = VHEIGHT;
 
 	if (!$("body").hasClass("fluid")) {
 		return;
