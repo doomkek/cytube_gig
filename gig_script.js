@@ -3728,28 +3728,34 @@ $("#chatbtn").on("click", function () {
 
 // danmaku 
 danmakuConfig = {
-	MSG_SPEED: 5,
-	FONT_SIZE: 40,
+	MSG_SPEED: 3000,
+    MSG_CAP: 500,
 	FONT_COLOR: "white",
-	FONT_OUTLINE_COLOR: "black",
-	FONT_OUTLINE_WIDTH: 2,
+	FONT_OUTLINE_COLOR: "black",	
 	FONT_BOLD: true,
 	FONT: "Verdana",
 	COLORS: ['white', 'white', 'white', 'blue', 'green', 'red'],
 };
 
 (function () {
-	let dc = danmakuConfig;
+	let dc = danmakuConfig
 	let vw = $('#videowrap');
-	vw.prepend($(`<canvas id="kinooo" style="position: absolute; pointer-events: none; margin-top:20px; z-index: 999"></canvas>`));
+	vw.prepend($(`<canvas id="kinooo" style="position: absolute; pointer-events: none; z-index: 999"></canvas>`));
 
 	let canvas = document.getElementById('kinooo');
-	canvas.width = 600;
-	canvas.height = 500;
-
 	let ctx = canvas.getContext('2d');
+	let bufferCanvas = document.createElement('canvas');
+	let bufferCtx = bufferCanvas.getContext('2d');
+
+	bufferCanvas.height = canvas.height = 600;
+	bufferCanvas.width = canvas.width = 800;
+
 	let msgQueue = [];
 	let prevTS = 0;
+
+	let FPS = 60;
+	let oneFrameMS = 1000 / FPS;
+	calcFPS({ count: 60, callback: fps => oneFrameMS = 1000 / (FPS = findClosestRefreshRate(fps)) });
 
 	function loop(ts) {
 		if (!prevTS)
@@ -3759,22 +3765,23 @@ danmakuConfig = {
 		let vwOffsetTop = vw[0].offsetTop + parseInt(vw.css('padding-top'));
 		let elapsed = ts - prevTS;
 
-		if (elapsed > 10) { //10ms is arbitrary number that is required for ~80fps animation
-			ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas on each frame before drawing new stuff
+		if (elapsed > oneFrameMS) {
+			//$('#msgCount').text(`Message queue: ${msgQueue.length}/${dc.MSG_CAP} FPS:${FPS} Frame MS:${oneFrameMS.toFixed(2)}ms draw: ${elapsed.toFixed(2)}ms `);
+			bufferCtx.clearRect(0, 0, bufferCanvas.width, bufferCanvas.height); // clear canvas on each frame before drawing new stuff
 
 			for (let msg of msgQueue) {
-				let speed = dc.MSG_SPEED;
+				let fontSize = Math.floor(scaleValue(canvas.height, 100, 900, 14, 50));
 
-				if (msg.y <= dc.FONT_SIZE) //prevent clipping on top
-					msg.y += dc.FONT_SIZE;
+				if (msg.y <= fontSize) //prevent clipping on top
+					msg.y += fontSize;
 
-				if (msg.y > canvas.height - dc.FONT_SIZE) //prevent clipping on bottom
-					msg.y -= dc.FONT_SIZE;
+				if (msg.y > canvas.height - fontSize) //prevent clipping on bottom
+					msg.y -= fontSize;
 
-				ctx.fillStyle = '#000000';
-				ctx.strokeStyle = dc.FONT_OUTLINE_COLOR;
-				ctx.lineWidth = dc.FONT_OUTLINE_WIDTH;
-				ctx.font = `${dc.FONT_BOLD ? 'bold' : ''} ${dc.FONT_SIZE}px ${dc.FONT}`;
+				bufferCtx.fillStyle = '#000000';
+				bufferCtx.strokeStyle = dc.FONT_OUTLINE_COLOR;
+				bufferCtx.lineWidth = scaleValue(fontSize, 14, 50, 0.5, 2.5);
+				bufferCtx.font = `${dc.FONT_BOLD ? 'bold' : ''} ${fontSize}px ${dc.FONT}`;
 
 				// accumulative width of the whole message, since message is sliced into text and emotes we need 
 				// to keep track of it current width to insert new text and emotes at correct offfset
@@ -3782,80 +3789,82 @@ danmakuConfig = {
 
 				for (let i = 0; i < msg.content.length; i++) {
 					let data = msg.content[i];
-					ctx.fillStyle = ctx.fillStyle == '#000000' ? data.c : ctx.fillStyle;
+					bufferCtx.fillStyle = ctx.fillStyle == '#000000' ? data.c : ctx.fillStyle;
 
 					if (data.t == 1) { // 1 = text                            
-						ctx.fillText(data.v, msg.x + rowW, msg.y); // text, X + cummulative offset, Y
-						ctx.strokeText(data.v, msg.x + rowW, msg.y); // same but for text outline 
+						bufferCtx.fillText(data.v, msg.x + rowW, msg.y); // text, X + cummulative offset, Y
+						bufferCtx.strokeText(data.v, msg.x + rowW, msg.y); // same but for text outline 
 
-						let mW = ctx.measureText(data.v).width; // get width of the string with current font settings
+						let mW = bufferCtx.measureText(data.v).width; // get width of the string with current font settings
 						rowW += mW; // add text width to cummulative offset
 					}
-					else if (data.t == 2) { // 2 = image
-						ctx.drawImage(
-							data.v, // image
-							msg.x + rowW + 10, //X + cummulative offset + 10 (just in case)
-							msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2), //Y - width of the image and - (font height (size) / 2) to make sure emote is rendered in the middle of the meesage on Y axis
-							data.v.width,  // img W
-							data.v.height); // img H
+					else {
+						let imgScaleFactor = scaleValue(canvas.height, 200, 800, 0.5, 1);
+						let imgW = data.v.width * imgScaleFactor;
+						let imgH = data.v.height * imgScaleFactor;
 
-						rowW += data.v.width; // add image width to cummulative offset
-					}
-					else if (data.t == 3) { // 3 = gif (gf ;_;)
-						let div, gif;
+						if (data.t == 2) { // 2 = image
+							bufferCtx.drawImage(
+								data.v, // image
+								msg.x + rowW + 10, //X + cummulative offset + 10 (just in case)
+								msg.y - (imgH / 2) - (fontSize / 2), //Y - width of the image and - (font height (size) / 2) to make sure emote is rendered in the middle of the meesage on Y axis
+								imgW,  // img W
+								imgH); // img H
 
-						if (!data.gifContainer) {
-							data.gifContainer = $(`<div><img src="${data.v.src}"></div>`);
-
-							div = $(data.gifContainer);
-							div.css('width', `${data.v.width}px`);
-							div.css('overflow', 'hidden');
-							div.css("position", "absolute");
-							//div.css('border', '1px solid yellow');
-							div.css("z-index", 999);
-
-							div.css({
-								left: `${vwOffsetLeft + canvas.width - data.v.width}px`,
-								top: Math.floor(msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2)) + vwOffsetTop + 'px'
-							});
-
-							gif = $(data.gifContainer).find('img');
-							gif.css('transform', `translateX(${msg.x + vwOffsetLeft + rowW + 10}px)`);
-
-							$('body').append(div);
+							rowW += imgW; // add image width to cummulative offset
 						}
-						else {
-							div = $(data.gifContainer);
-							gif = $(data.gifContainer).find('img');
-						}
+						else if (data.t == 3) { // 3 = gif (gf ;_;)
+							let div, gif;
 
-						let l = msg.x + vwOffsetLeft + rowW + 10 - data.v.width;
+							if (!data.gifContainer) {
+								data.gifContainer = $(`<div><img src="${data.v.src}"></div>`);
 
-						if (l > vwOffsetLeft + canvas.width - data.v.width * 2) {
-							gif.css('transform', `translateX(${Math.floor(l - (vwOffsetLeft + canvas.width - data.v.width)) + data.v.width}px)`);
-						}
-						else if (div.offset().left >= vwOffsetLeft) {
-							div.css({
-								left: `${l + data.v.width}px`,
-								top: Math.floor(msg.y - (data.v.height / 2) - (dc.FONT_SIZE / 2)) + vwOffsetTop + 'px'
-							});
-							// div.css('border', '1px solid red');
-						}
-						else {
-							// div.css('border', '1px solid green');
-							gif.css('transform', `translateX(${Math.floor(msg.x + rowW + 10)}px)`);
-						}
+								div = $(data.gifContainer);
+								div.css('width', `${imgW}px`);
+								div.css('overflow', 'hidden');
+								div.css("position", "absolute");
+								div.css("z-index", 999);
 
-						rowW += data.v.width
+								div.css({
+									left: `${vwOffsetLeft + canvas.width - imgW}px`,
+									top: Math.floor(msg.y - (imgH / 2) - (fontSize / 2)) + vwOffsetTop + 'px'
+								});
+
+								gif = $(data.gifContainer).find('img');
+								gif.css('transform', `translateX(${msg.x + vwOffsetLeft + rowW + 10}px)`);
+
+								$('body').append(div);
+							}
+							else {
+								div = $(data.gifContainer);
+								gif = $(data.gifContainer).find('img');
+							}
+
+							let l = msg.x + vwOffsetLeft + rowW + 10 - imgW;
+							div.css('width', `${imgW}px`);
+							gif.css('width', `${imgW}px`);
+
+							if (l > vwOffsetLeft + canvas.width - imgW * 2) {
+								gif.css('transform', `translateX(${Math.floor(l - (vwOffsetLeft + canvas.width - imgW)) + imgW}px)`);
+							}
+							else if (div.offset().left >= vwOffsetLeft) {
+								div.css({
+									left: `${l + imgW}px`,
+									top: Math.floor(msg.y - (imgH / 2) - (fontSize / 2)) + vwOffsetTop + 'px'
+								});
+							}
+							else {
+								gif.css('transform', `translateX(${Math.floor(msg.x + rowW + 10)}px)`);
+							}
+
+							rowW += imgW;
+						}
 					}
 				}
 
 				// horizontal speed, that is being added each frame
-				// +2 or -2 speed is calculated based on whole row width
-				// the longer is row, the slower it will be
-				// can't be slower/faster than base speed +-2
-				speed -= adjustScrollSpeed(rowW);
-				msg.x -= speed > dc.MSG_SPEED + 2 ? dc.MSG_SPEED + 2 : speed < dc.MSG_SPEED - 2 ? dc.MSG_SPEED : speed;
+				let delay = oneFrameMS + (elapsed - oneFrameMS);
+				msg.x -= (canvas.width / dc.MSG_SPEED * delay) + (rowW / dc.MSG_SPEED * delay);
 
 				if (msg.x < -(rowW + 100)) {
 					msgQueue.splice(msgQueue.indexOf(msg), 1);
@@ -3869,6 +3878,9 @@ danmakuConfig = {
 
 			prevTS = ts;
 		}
+
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.drawImage(bufferCanvas, 0, 0);
 
 		requestAnimationFrame(loop);
 	}
@@ -3929,7 +3941,7 @@ danmakuConfig = {
 						comment.content[j - 1].v = img;
 						imgAwaitCount--
 
-						if (imgAwaitCount == 0) {
+						if (imgAwaitCount == 0 && msgQueue.length < dc.MSG_CAP) {
 							msgQueue.push(comment);
 						}
 					};
@@ -3939,16 +3951,28 @@ danmakuConfig = {
 			return;
 		}
 
-		if (imgAwaitCount == 0)
+		if (imgAwaitCount == 0 && msgQueue.length < dc.MSG_CAP) {
 			msgQueue.push(comment);
+		}
 	});
+
+	function scaleValue(value, lowerBoundary, upperBoundary, scaleFrom, scaleTo) {
+		if (value <= lowerBoundary)
+			return scaleFrom;
+		if (value >= upperBoundary)
+			return scaleTo;
+
+		return scaleFrom + ((value - lowerBoundary) / (upperBoundary - lowerBoundary)) * (scaleTo - scaleFrom);
+	}
 
 	function initRandom(seed) {
 		let state = seed % 2147483647;
 		if (state <= 0) {
 			state += 2147483646;
 		}
-
+		for (let i = 0; i < 10; i++) {
+			state = (state * 16807) % 2147483647;
+		}
 		return {
 			seed: seed,
 			next: function () {
@@ -3969,6 +3993,10 @@ danmakuConfig = {
 
 		return normalized * 4 - 2;
 	}
+
+	function calcFPS(a) { function b() { if (f--) c(b); else { var e = 3 * Math.round(1E3 * d / 3 / (performance.now() - g)); "function" === typeof a.callback && a.callback(e); } } var c = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame; if (!c) return !0; a || (a = {}); var d = a.count || 60, f = d, g = performance.now(); b() }
+	function findClosestRefreshRate(n) { let e = [300, 240, 165, 144, 120, 90, 75, 60, 30]; let t = e[0], r = Math.abs(n - t); for (const a of e) { const e = Math.abs(n - a); e < r && (t = a, r = e) } return t };
+
 })();
 
 // fix layout behaviour after resizing
