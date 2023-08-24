@@ -3745,6 +3745,7 @@ danmakuConfig = {
 	let dc = danmakuConfig
 	let vw = $('#videowrap');
 	vw.prepend($(`<canvas id="kinooo" style="position: absolute; pointer-events: none; z-index: 999"></canvas>`));
+	vw.prepend($(`<div id="msgCount" style="color: red;">0</div>`));
 
 	let canvas = document.getElementById('kinooo');
 	let ctx = canvas.getContext('2d');
@@ -3769,7 +3770,7 @@ danmakuConfig = {
 		if (elapsed > oneFrameMS) {
 			bufferCanvas.width = canvas.width = dc.SIZE.W;
 			bufferCanvas.height = canvas.height = dc.SIZE.H;
-			//$('#msgCount').text(`Message queue: ${msgQueue.length}/${dc.MSG_CAP} FPS:${FPS} Frame MS:${oneFrameMS.toFixed(2)}ms draw: ${elapsed.toFixed(2)}ms `);
+			$('#msgCount').text(`Message queue: ${msgQueue.length}/${dc.MSG_CAP} FPS:${FPS} Frame MS:${oneFrameMS.toFixed(2)}ms draw: ${elapsed.toFixed(2)}ms `);
 			bufferCtx.clearRect(0, 0, bufferCanvas.width, bufferCanvas.height); // clear canvas on each frame before drawing new stuff
 
 			for (let msg of msgQueue) {
@@ -3789,6 +3790,7 @@ danmakuConfig = {
 				// accumulative width of the whole message, since message is sliced into text and emotes we need 
 				// to keep track of it current width to insert new text and emotes at correct offfset
 				let rowW = 0;
+				let imgModifier = 0;
 
 				for (let i = 0; i < msg.content.length; i++) {
 					let data = msg.content[i];
@@ -3805,6 +3807,7 @@ danmakuConfig = {
 						let imgScaleFactor = scaleValue(canvas.height, 200, 800, 0.5, 1);
 						let imgW = data.v.width * imgScaleFactor;
 						let imgH = data.v.height * imgScaleFactor;
+						imgModifier += 0.5;
 
 						if (data.t == 2) { // 2 = image
 							bufferCtx.drawImage(
