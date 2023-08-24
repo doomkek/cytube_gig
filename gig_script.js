@@ -3745,7 +3745,6 @@ danmakuConfig = {
 	let dc = danmakuConfig
 	let vw = $('#videowrap');
 	vw.prepend($(`<canvas id="kinooo" style="position: absolute; pointer-events: none; z-index: 999"></canvas>`));
-	vw.prepend($(`<div id="msgCount" style="color: red;">0</div>`));
 
 	let canvas = document.getElementById('kinooo');
 	let ctx = canvas.getContext('2d');
@@ -3768,8 +3767,6 @@ danmakuConfig = {
 		let elapsed = ts - prevTS;
 
 		if (elapsed > oneFrameMS) {
-			$('#msgCount').text(`Message queue: ${msgQueue.length}/${dc.MSG_CAP} FPS:${FPS} Frame MS:${oneFrameMS.toFixed(2)}ms draw: ${elapsed.toFixed(2)}ms `);
-
 			bufferCanvas.height = canvas.height = dc.SIZE.H;
 			bufferCanvas.width = canvas.width = dc.SIZE.W;
 
