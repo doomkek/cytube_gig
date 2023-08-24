@@ -3838,13 +3838,13 @@ danmakuConfig = {
 
 								div.css({
 									left: `${vwOffsetLeft + canvas.width - imgW}px`,
-									top: Math.floor(msg.y - (imgH / 2) - (fontSize / 2)) + vwOffsetTop + 'px'
+									top: Math.floor(msg.y - (imgH / 4) - (fontSize / 2)) + vwOffsetTop + 'px'
 								});
 
 								gif = $(data.gifContainer).find('img');
 								gif.css('transform', `translateX(${msg.x + vwOffsetLeft + rowW + 10}px)`);
 
-								$('#videowrap').append(div);
+								$('body').append(div);
 							}
 							else {
 								div = $(data.gifContainer);
@@ -3861,7 +3861,7 @@ danmakuConfig = {
 							else if (div.offset().left >= vwOffsetLeft) {
 								div.css({
 									left: `${l + imgW}px`,
-									top: Math.floor(msg.y - (imgH / 2) - (fontSize / 2)) + vwOffsetTop + 'px'
+									top: Math.floor(msg.y - (imgH / 4) - (fontSize / 2)) + vwOffsetTop + 'px'
 								});
 							}
 							else {
