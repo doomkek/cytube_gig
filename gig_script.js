@@ -3852,12 +3852,6 @@ danmakuConfig = {
 							else {
 								div = $(data.gifContainer);
 								gif = $(data.gifContainer).find('img');
-								if (msg.x + vwOffsetLeft + rowW + 10 - imgW > vwOffsetLeft + canvas.width - imgW * 2) {
-									div.css({
-										left: `${vwOffsetLeft + canvas.width - imgW}px`,
-										top: Math.floor(msg.y - (imgH / 4) - (fontSize / 2)) + vwOffsetTop + 'px'
-									});
-								}
 							}
 
 							let l = msg.x + vwOffsetLeft + rowW + 10 - imgW;
