@@ -3769,6 +3769,10 @@ danmakuConfig = {
 
 		if (elapsed > oneFrameMS) {
 			$('#msgCount').text(`Message queue: ${msgQueue.length}/${dc.MSG_CAP} FPS:${FPS} Frame MS:${oneFrameMS.toFixed(2)}ms draw: ${elapsed.toFixed(2)}ms `);
+
+			bufferCanvas.height = canvas.height = dc.SIZE.H;
+			bufferCanvas.width = canvas.width = dc.SIZE.W;
+
 			bufferCtx.clearRect(0, 0, bufferCanvas.width, bufferCanvas.height); // clear canvas on each frame before drawing new stuff
 
 			for (let msg of msgQueue) {
@@ -3937,7 +3941,7 @@ danmakuConfig = {
 		let imgAwaitCount = 0;
 
 		try {
-			let color = 'white';
+			let color = '';
 
 			childNodes.each((index, node) => {
 				if ((node.nodeName == 'span' || node.nodeName == '#text') && node.textContent.length > 0) {
