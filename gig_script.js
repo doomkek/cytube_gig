@@ -3768,8 +3768,6 @@ danmakuConfig = {
 		let elapsed = ts - prevTS;
 
 		if (elapsed > oneFrameMS) {
-			bufferCanvas.width = canvas.width = dc.SIZE.W;
-			bufferCanvas.height = canvas.height = dc.SIZE.H;
 			$('#msgCount').text(`Message queue: ${msgQueue.length}/${dc.MSG_CAP} FPS:${FPS} Frame MS:${oneFrameMS.toFixed(2)}ms draw: ${elapsed.toFixed(2)}ms `);
 			bufferCtx.clearRect(0, 0, bufferCanvas.width, bufferCanvas.height); // clear canvas on each frame before drawing new stuff
 
@@ -3789,8 +3787,7 @@ danmakuConfig = {
 
 				// accumulative width of the whole message, since message is sliced into text and emotes we need 
 				// to keep track of it current width to insert new text and emotes at correct offfset
-				let rowW = 0;
-				let imgModifier = 0;
+				let rowW = 0, imgModifier = 0, mult = 0.5;
 
 				for (let i = 0; i < msg.content.length; i++) {
 					let data = msg.content[i];
@@ -3807,7 +3804,14 @@ danmakuConfig = {
 						let imgScaleFactor = scaleValue(canvas.height, 200, 800, 0.5, 1);
 						let imgW = data.v.width * imgScaleFactor;
 						let imgH = data.v.height * imgScaleFactor;
-						imgModifier += 0.5;
+
+						imgModifier -= mult /= 1.5;
+
+						if (msg.y <= imgH / 2) //prevent clipping on top
+							msg.y += imgH / 2;
+
+						if (msg.y > canvas.height - imgH / 2) //prevent clipping on bottom
+							msg.y -= imgH / 2;
 
 						if (data.t == 2) { // 2 = image
 							bufferCtx.drawImage(
@@ -3833,17 +3837,23 @@ danmakuConfig = {
 
 								div.css({
 									left: `${vwOffsetLeft + canvas.width - imgW}px`,
-									top: Math.floor(msg.y - (imgH / 2) - (fontSize / 2)) + vwOffsetTop + 'px'
+									top: Math.floor(msg.y - (imgH / 4) - (fontSize / 2)) + vwOffsetTop + 'px'
 								});
 
 								gif = $(data.gifContainer).find('img');
 								gif.css('transform', `translateX(${msg.x + vwOffsetLeft + rowW + 10}px)`);
 
-								$('body').append(div);
+								$('#videowrap').append(div);
 							}
 							else {
 								div = $(data.gifContainer);
 								gif = $(data.gifContainer).find('img');
+								if (msg.x + vwOffsetLeft + rowW + 10 - imgW > vwOffsetLeft + canvas.width - imgW * 2) {
+									div.css({
+										left: `${vwOffsetLeft + canvas.width - imgW}px`,
+										top: Math.floor(msg.y - (imgH / 4) - (fontSize / 2)) + vwOffsetTop + 'px'
+									});
+								}
 							}
 
 							let l = msg.x + vwOffsetLeft + rowW + 10 - imgW;
@@ -3856,7 +3866,7 @@ danmakuConfig = {
 							else if (div.offset().left >= vwOffsetLeft) {
 								div.css({
 									left: `${l + imgW}px`,
-									top: Math.floor(msg.y - (imgH / 2) - (fontSize / 2)) + vwOffsetTop + 'px'
+									top: Math.floor(msg.y - (imgH / 4) - (fontSize / 2)) + vwOffsetTop + 'px'
 								});
 							}
 							else {
@@ -3868,9 +3878,8 @@ danmakuConfig = {
 					}
 				}
 
-				// horizontal speed 
 				let delay = oneFrameMS + (elapsed - oneFrameMS);
-				let rowWscaled = rowW >= 1000 ? 0 : 1000 - rowW;
+				let rowWscaled = rowW >= 500 ? 0 : 500;
 				let speed = (canvas.width / dc.MSG_SPEED_MS * delay) + (rowWscaled / dc.MSG_SPEED_MS * delay);
 				
 				msg.x -= speed + imgModifier;
