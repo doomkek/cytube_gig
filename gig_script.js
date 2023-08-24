@@ -3865,9 +3865,12 @@ danmakuConfig = {
 					}
 				}
 
-				// horizontal speed
+				// horizontal speed 
 				let delay = oneFrameMS + (elapsed - oneFrameMS);
-				msg.x -= (canvas.width / dc.MSG_SPEED_MS * delay) + ((1000 - rowW) / dc.MSG_SPEED_MS * delay);
+				let rowWscaled = rowW >= 1000 ? 0 : 1000 - rowW;
+				let speed = (canvas.width / dc.MSG_SPEED_MS * delay) + (rowWscaled / dc.MSG_SPEED_MS * delay);
+				
+				msg.x -= speed + imgModifier;
 
 				if (msg.x < -(rowW + 100)) {
 					msgQueue.splice(msgQueue.indexOf(msg), 1);
