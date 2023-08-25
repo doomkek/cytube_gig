@@ -3536,16 +3536,20 @@ $("#chatline, #chatbtn").unbind();
 	$('#chatline').on('input', function (e) {
 		let val = e.target.value;
 		if (val.includes(':')) {
-			emoteName = val.substring(val.lastIndexOf(':') + 1);
+			emoteQuery = val.substring(val.lastIndexOf(':') + 1).toLocaleLowerCase();
 
-			if (emoteName.length >= 2) {
+			if (emoteQuery.length >= 1) {
 				let foundEmotes = [];
 
 				CHANNEL.emotes.forEach(emote => {
-					if (emote.name.toLowerCase().includes(emoteName.toLowerCase())) {
+					let emot = emote.name.toLocaleLowerCase();
+
+					if (emot.startsWith(emoteQuery) || emot.includes(emoteQuery)) {
 						foundEmotes.push(emote);
-					}
+					}                        
 				});
+
+				foundEmotes.sort((a, b) => a.name.toLowerCase().indexOf(emoteQuery) > b.name.toLowerCase().indexOf(emoteQuery) ? 1 : -1);
 
 				if (foundEmotes.length > 0) {
 					if (selList.length > 0) {
