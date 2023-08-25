@@ -3658,6 +3658,7 @@ $("#chatline").on("keydown", function (ev) {
 	}
 	if (ev.keyCode == 13) {
 		if (CHATTHROTTLE) {
+			socket.emit("chatMsg", { msg: "chat throttle" });
 			return;
 		}
 		_msg = $("#chatline").val();
