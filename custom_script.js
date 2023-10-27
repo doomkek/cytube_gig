@@ -128,8 +128,14 @@ const wallpaperButtonInterval = setInterval(() => {
     danmakuBtn.on('click', function () { $("#kinooo").toggle(); danmakuBtn.children().first().toggleClass('glyphicon-eye-open').toggleClass('glyphicon-eye-close'); });
 
     emoteSizeBtn.on('click', function (e) {
-        var currentSize = parseInt($('.channel-emote').css('max-width'));
-        currentSize = currentSize <= 25 ? 100 : currentSize - 25;
+        var currentSize = chatConfig.EMOTE_SIZE;
+        currentSize = chatConfig.EMOTE_SIZE = currentSize <= 25 ? 100 : currentSize - 25;
+
+        $('.channel-emote').css({
+            'max-width': currentSize + 'px',
+            'max-height': currentSize + 'px'
+        });
+
         $(e.target).text("Emote Size: " + currentSize + "%");
     });
 

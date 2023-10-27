@@ -3732,7 +3732,7 @@ $("#chatbtn").on("click", function () {
 
 
 chatConfig = {
-	EMOTE_SIZE: 100
+	EMOTE_SIZE: 50
 }
 
 // danmaku 
