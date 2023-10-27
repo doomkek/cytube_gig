@@ -3730,6 +3730,11 @@ $("#chatbtn").on("click", function () {
 	}
 });
 
+
+chatConfig = {
+	EMOTE_SIZE: 100
+}
+
 // danmaku 
 danmakuConfig = {
 	MSG_SPEED_MS: 3000,
@@ -3907,6 +3912,11 @@ danmakuConfig = {
 	let rng = initRandom(CHANNEL.usercount);
 
 	$("#messagebuffer").bind("DOMNodeInserted", function (e) {
+		$(e.target).find('.channel-emote').css({
+            'max-width': chatConfig.EMOTE_SIZE + 'px',
+            'max-height': chatConfig.EMOTE_SIZE + 'px'
+        });
+
 		let chatEntry = $(e.target).clone();
 
 		if (chatEntry.find('.server-whisper').length || chatEntry.find('span.action').length) { // filter system messages 

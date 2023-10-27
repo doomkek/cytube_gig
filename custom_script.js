@@ -130,12 +130,6 @@ const wallpaperButtonInterval = setInterval(() => {
     emoteSizeBtn.on('click', function (e) {
         var currentSize = parseInt($('.channel-emote').css('max-width'));
         currentSize = currentSize <= 25 ? 100 : currentSize - 25;
-
-        $('.channel-emote').css({
-            'max-width': currentSize + 'px',
-            'max-height': currentSize + 'px'
-        });
-
         $(e.target).text("Emote Size: " + currentSize + "%");
     });
 
