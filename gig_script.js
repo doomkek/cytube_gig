@@ -149,7 +149,7 @@ Favicon_URL = 'https://files.catbox.moe/7f4v2n.png';
 
 MiniLogo_URL = 'https://files.catbox.moe/0cd1on.png';
 
-ChannelName_Caption = 'Akasha Network';
+ChannelName_Caption = 'Narzissenkreuz Ordo';
 
 HeaderDropMenu_Title = 'Genshin';
 
