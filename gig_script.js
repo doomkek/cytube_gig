@@ -299,23 +299,23 @@ TopUserLogo = [
 	['korean collage', 'https://dl.dropboxusercontent.com/s/qud9adhs183dq30/korea.jpg', 160],
 	['my little pony', 'https://dl.dropboxusercontent.com/s/r4ozo8oj8lmerec/mlp.jpg', 190],
 ];
-/*
+
 EmptyCornerBackground = [
-	'https://files.catbox.moe/boqq0r.jpg',
-	'https://files.catbox.moe/tsp1ue.png',
-	'https://files.catbox.moe/93g73x.png',
-	'https://files.catbox.moe/8n71pb.png',
-	'https://files.catbox.moe/xd4ih2.png',
-	'https://files.catbox.moe/6g2bao.png',
-	'https://files.catbox.moe/7yu46t.png',
+	//'https://files.catbox.moe/boqq0r.jpg',
+	//'https://files.catbox.moe/tsp1ue.png',
+	//'https://files.catbox.moe/93g73x.png',
+	//'https://files.catbox.moe/8n71pb.png',
+	//'https://files.catbox.moe/xd4ih2.png',
+	//'https://files.catbox.moe/6g2bao.png',
+	//'https://files.catbox.moe/7yu46t.png',
 ];
 
 WebsiteBackground = [
-	'https://files.catbox.moe/1il8do.jpg',
-	'https://files.catbox.moe/8j2gz1.jpg',
-	'https://files.catbox.moe/cpuys9.jpg',
+	//'https://files.catbox.moe/1il8do.jpg',
+	//'https://files.catbox.moe/8j2gz1.jpg',
+	//'https://files.catbox.moe/cpuys9.jpg',
 ];
-*/
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* ----- INDEPENDENT EMOTES AND FILTERS CONFIGURATION ----- */
