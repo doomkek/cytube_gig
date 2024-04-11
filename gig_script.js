@@ -3837,7 +3837,7 @@ danmakuConfig = {
 							let div, gif;
 
 							if (!data.gifContainer) {
-								data.gifContainer = $(`<div><img src="${data.v.src}"></div>`);
+								data.gifContainer = $(`<div class="gifEmote"><img src="${data.v.src}"></div>`);
 
 								div = $(data.gifContainer);
 								div.css('width', `${imgW}px`);
