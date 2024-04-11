@@ -299,7 +299,7 @@ TopUserLogo = [
 	['korean collage', 'https://dl.dropboxusercontent.com/s/qud9adhs183dq30/korea.jpg', 160],
 	['my little pony', 'https://dl.dropboxusercontent.com/s/r4ozo8oj8lmerec/mlp.jpg', 190],
 ];
-
+/*
 EmptyCornerBackground = [
 	'https://files.catbox.moe/boqq0r.jpg',
 	'https://files.catbox.moe/tsp1ue.png',
@@ -315,7 +315,7 @@ WebsiteBackground = [
 	'https://files.catbox.moe/8j2gz1.jpg',
 	'https://files.catbox.moe/cpuys9.jpg',
 ];
-
+*/
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* ----- INDEPENDENT EMOTES AND FILTERS CONFIGURATION ----- */
