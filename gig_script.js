@@ -4013,7 +4013,7 @@ danmakuConfig = {
 	}
 
 	function calcFPS(a) { function b() { if (f--) c(b); else { var e = 3 * Math.round(1E3 * d / 3 / (performance.now() - g)); "function" === typeof a.callback && a.callback(e); } } var c = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame; if (!c) return !0; a || (a = {}); var d = a.count || 60, f = d, g = performance.now(); b() }
-	function findClosestRefreshRate(n) { let e = [300, 240, 165, 144, 120, 90, 75, 60, 30]; let t = e[0], r = Math.abs(n - t); for (const a of e) { const e = Math.abs(n - a); e < r && (t = a, r = e) } return t };
+	function findClosestRefreshRate(n) { let e = [240, 165, 144, 120, 90, 75, 60]; let t = e[0], r = Math.abs(n - t); for (const a of e) { const e = Math.abs(n - a); e < r && (t = a, r = e) } return t };
 })();
 
 // fix layout behaviour after resizing
