@@ -3844,6 +3844,7 @@ danmakuConfig = {
 								div.css('overflow', 'hidden');
 								div.css("position", "absolute");
 								div.css("z-index", 999);
+								div.css("display", canvas.style.display);
 
 								div.css({
 									left: `${vwOffsetLeft + canvas.width - imgW}px`,
