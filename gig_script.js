@@ -1516,7 +1516,7 @@ function showEmotes() {
 		makeAlert("No emotes available", "Ask channel administrator.").appendTo(emotespanel);
 	} else if (UI_GroupEmotes != "1" || len <= GroupEmotes_Number) {
 		for (i in CHANNEL.emotes) {
-			$('<img onclick="insertText(\'' + CHANNEL.emotes[i].name + ' \') />')
+			$('<img loading="lazy" onclick="insertText(\'' + CHANNEL.emotes[i].name + ' \') />')
 				.attr({ 'src': CHANNEL.emotes[i].image, 'title': CHANNEL.emotes[i].name })
 				.appendTo(emotespanel);
 		}
@@ -1527,7 +1527,7 @@ function showEmotes() {
 		html = '';
 
 		for (i = 0; i < len; i++) {
-			html += `<img src="${CHANNEL.emotes[i].image}" onclick="insertText('${CHANNEL.emotes[i].name} ')" title="${CHANNEL.emotes[i].name}" />`;
+			html += `<img loading="lazy" src="${CHANNEL.emotes[i].image}" onclick="insertText('${CHANNEL.emotes[i].name} ')" title="${CHANNEL.emotes[i].name}" />`;
 			if (i % GroupEmotes_Number == stop) {
 				arr.push(html);
 				html = '';
