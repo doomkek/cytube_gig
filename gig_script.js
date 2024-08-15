@@ -3559,14 +3559,17 @@ $("#chatline, #chatbtn").unbind();
 					parent.append(`<div id="emoteListSelect"></div>`);
 					selList = $('#emoteListSelect');
 					selList.css("position", "absolute");
-					selList.css("left", chat.position().left);
-					selList.css("top", chat.position().top + parseInt(chat.css("height")));
+					selList.css("left", chat.position().left);					
 					selList.css("background-color", "#161a20");
 					selList.css("border", "1px solid black");
 					selList.css("z-index", "999");
-
+					selList.css("max-height", "150px");
+                        		selList.css("overflow", "auto");
+                        		selList.css("min-width", "250px");
+                       			selList.css("margin", "0");
+					
 					foundEmotes.forEach(emote => {
-						let opt = $(`<div class="list-option"><img src=${emote.image} heigt="35px" width="35px">${emote.name}</div>`);
+						let opt = $(`<div class="list-option"><img loading="lazy" src=${emote.image} heigt="35px" width="35px">${emote.name}</div>`);
 
 						opt.on('click', function (e) {
 							selectedEmote = CHANNEL.emotes.find(emote => emote.name == $(e.target).text());
@@ -3578,6 +3581,13 @@ $("#chatline, #chatbtn").unbind();
 
 						selList.append(opt);
 					});
+
+					var rect = document.querySelector('#emoteListSelect').getBoundingClientRect();
+					var chatTop = chat.position().top;
+					if (rect.top < 0 || rect.left < 0 || rect.bottom > window.innerHeight || rect.right > window.innerWidth)
+						selList.css("top", chatTop-rect.height);
+					else
+						selList.css("top", chatTop + parseInt(chat.css("height")));					
 
 					$('.list-option').first().toggleClass('selected');
 
@@ -3650,7 +3660,7 @@ $("#chatline, #chatbtn").unbind();
 		}
 
 		if (tt < pt) { // scrolling top
-			parent.scrollTop(parent.scrollTop() - pt + tt - tH);
+			parent.scrollTop(parent.scrollTop() - pt + tt);
 		}
 	}
 })();
@@ -3753,7 +3763,7 @@ danmakuConfig = {
 (function () {
 	let dc = danmakuConfig
 	let vw = $('#videowrap');
-	vw.prepend($(`<canvas id="kinooo" style="position: absolute; pointer-events: none; z-index: 999"></canvas>`));
+	vw.prepend($(`<canvas id="kinooo" style="position: absolute; pointer-events: none; z-index: 999; padding-top: 20px"></canvas>`));
 
 	let canvas = document.getElementById('kinooo');
 	let ctx = canvas.getContext('2d');
