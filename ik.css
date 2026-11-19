@@ -1,4 +1,4 @@
-/* Interknot UI v0.1.0 | built 2026-11-18T13:21:01.784Z */
+/* Interknot UI v0.1.0 | built 2026-11-19T19:33:12.993Z */
 /* src/styles/font.css */
 @font-face {
   font-family: "zzz";
@@ -341,6 +341,12 @@ body.ik-no-names #messagebuffer span:has(> .username) {
 #messagebuffer > .ik-bot-post span:has(> .username),
 #messagebuffer > .ik-bot-post > .ik-thread {
   display: none;
+}
+#messagebuffer > .ik-bot-post .ik-bot-to {
+  display: none;
+}
+#messagebuffer > .ik-bot-post.ik-bot-other:not(.ik-bot-open) .ik-bot-to {
+  display: inline;
 }
 #messagebuffer > .ik-bot-post.ik-bot-hidden {
   display: none !important;
